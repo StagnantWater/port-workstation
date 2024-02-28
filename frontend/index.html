@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <!-- module -->
     <title>Port Workstation</title>
@@ -12,16 +12,9 @@
     <header class="app-header">
         <h1 class="app-header__app-name">Кабинет администратора</h1>
         <nav class="app-header__app-navigation navigation">
-            <div class="navigation__voyages">
-                <a href="#voyages" class="navigation__link">Рейсы</a>
-                <button type="button" class="navigation__add-voyage">+</button>
-            </div>
-            <div class="navigation__destinations">
-                <a href="#destinations" class="navigation__link">Пункты назначения</a>
-            </div>
-            <div class="navigation__ferries">
-                <a href="#ferries" class="navigation__link">Паромы</a>
-            </div>
+            <a href="#voyages" class="navigation__link navigation__link_current">Рейсы</a>
+            <a href="#destinations" class="navigation__link">Пункты назначения</a>
+            <a href="#ferries" class="navigation__link">Паромы</a>
         </nav>
     </header>
     <main class="app-main">
@@ -66,6 +59,71 @@
                     </span>
                 </div>
             </li>
+            <li class="voyage-list__item voyage">
+                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+                <h3 class="voyage__ferry">Судно: Калиго</h3>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Грузы
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые ячейки: 3/26
+                    </span>
+                </div>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Автомобили
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые машиноместа: 7/10
+                    </span>
+                </div>
+            </li>
+            <li class="voyage-list__item voyage">
+                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+                <h3 class="voyage__ferry">Судно: Калиго</h3>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Грузы
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые ячейки: 3/26
+                    </span>
+                </div>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Автомобили
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые машиноместа: 7/10
+                    </span>
+                </div>
+            </li>
+            <li class="voyage-list__item voyage">
+                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+                <h3 class="voyage__ferry">Судно: Калиго</h3>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Грузы
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые ячейки: 3/26
+                    </span>
+                </div>
+                <div class="voyage__passenger-tmp passenger-tmp">
+                    <h4 class="passenger-tmp__type">
+                        Автомобили
+                    </h4>
+                    <span class="passenger-tmp__occupied-storage">
+                        Занятые машиноместа: 7/10
+                    </span>
+                </div>
+            </li>
+            <li class="voyage-list__item voyage-adder">
+                <button type="button" class="voyage-adder__btn">
+                  &#10010; Добавить рейс
+                </button>
+              </li>
         </ul>
     </main>
 </body>
