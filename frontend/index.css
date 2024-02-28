@@ -109,3 +109,44 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
+
+.app-modal[open] {
+  border: 0;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.app-modal::backdrop {
+  backdrop-filter: blur(10px);
+}
+
+.app-modal__form {
+  box-sizing: border-box;
+  padding: 2vh;
+  min-width: 50vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.app-modal__input {
+  padding: 0.6vw;
+  border-radius: 0.7vw;
+  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+  color: var(--black-color);
+  border: 2px solid var(--black-color);
+}
+
+.app-modal__controls {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+}
+
+.app-modal__btn {
+  cursor: pointer;
+  padding: 5px;
+}

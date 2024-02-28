@@ -1,130 +1,144 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
     <!-- module -->
     <title>Port Workstation</title>
-</head>
-<body>
+  </head>
+  <body>
     <header class="app-header">
-        <h1 class="app-header__app-name">Кабинет администратора</h1>
-        <nav class="app-header__app-navigation navigation">
-            <a href="#voyages" class="navigation__link navigation__link_current">Рейсы</a>
-            <a href="#destinations" class="navigation__link">Пункты назначения</a>
-            <a href="#ferries" class="navigation__link">Паромы</a>
-        </nav>
+      <h1 class="app-header__app-name">Кабинет администратора</h1>
+      <nav class="app-header__app-navigation navigation">
+        <a href="#voyages" class="navigation__link navigation__link_current"
+          >Рейсы</a
+        >
+        <a href="#destinations" class="navigation__link">Пункты назначения</a>
+        <a href="#ferries" class="navigation__link">Паромы</a>
+      </nav>
     </header>
     <main class="app-main">
-        <ul class="voyage-list">
-            <li class="voyage-list__item voyage">
-                <h2 class="voyage__destination">Куда: Варчас</h2>
-                <h3 class="voyage__ferry">Судно: Лигейя</h3>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Грузы
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые ячейки: 6/10
-                    </span>
-                </div>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Автомобили
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые машиноместа: 2/3
-                    </span>
-                </div>
-            </li>
-            <li class="voyage-list__item voyage">
-                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
-                <h3 class="voyage__ferry">Судно: Калиго</h3>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Грузы
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые ячейки: 3/26
-                    </span>
-                </div>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Автомобили
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые машиноместа: 7/10
-                    </span>
-                </div>
-            </li>
-            <li class="voyage-list__item voyage">
-                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
-                <h3 class="voyage__ferry">Судно: Калиго</h3>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Грузы
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые ячейки: 3/26
-                    </span>
-                </div>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Автомобили
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые машиноместа: 7/10
-                    </span>
-                </div>
-            </li>
-            <li class="voyage-list__item voyage">
-                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
-                <h3 class="voyage__ferry">Судно: Калиго</h3>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Грузы
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые ячейки: 3/26
-                    </span>
-                </div>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Автомобили
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые машиноместа: 7/10
-                    </span>
-                </div>
-            </li>
-            <li class="voyage-list__item voyage">
-                <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
-                <h3 class="voyage__ferry">Судно: Калиго</h3>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Грузы
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые ячейки: 3/26
-                    </span>
-                </div>
-                <div class="voyage__passenger-tmp passenger-tmp">
-                    <h4 class="passenger-tmp__type">
-                        Автомобили
-                    </h4>
-                    <span class="passenger-tmp__occupied-storage">
-                        Занятые машиноместа: 7/10
-                    </span>
-                </div>
-            </li>
-            <li class="voyage-list__item voyage-adder">
-                <button type="button" class="voyage-adder__btn">
-                  &#10010; Добавить рейс
-                </button>
-              </li>
-        </ul>
+      <ul class="voyage-list">
+        <li class="voyage-list__item voyage">
+          <h2 class="voyage__destination">Куда: Варчас</h2>
+          <h3 class="voyage__ferry">Судно: Лигейя</h3>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Грузы</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые ячейки: 6/10
+            </span>
+          </div>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Автомобили</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые машиноместа: 2/3
+            </span>
+          </div>
+        </li>
+        <li class="voyage-list__item voyage">
+          <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+          <h3 class="voyage__ferry">Судно: Калиго</h3>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Грузы</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые ячейки: 3/26
+            </span>
+          </div>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Автомобили</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые машиноместа: 7/10
+            </span>
+          </div>
+        </li>
+        <li class="voyage-list__item voyage">
+          <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+          <h3 class="voyage__ferry">Судно: Калиго</h3>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Грузы</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые ячейки: 3/26
+            </span>
+          </div>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Автомобили</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые машиноместа: 7/10
+            </span>
+          </div>
+        </li>
+        <li class="voyage-list__item voyage">
+          <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+          <h3 class="voyage__ferry">Судно: Калиго</h3>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Грузы</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые ячейки: 3/26
+            </span>
+          </div>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Автомобили</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые машиноместа: 7/10
+            </span>
+          </div>
+        </li>
+        <li class="voyage-list__item voyage">
+          <h2 class="voyage__destination">Куда: Мангровый колледж</h2>
+          <h3 class="voyage__ferry">Судно: Калиго</h3>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Грузы</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые ячейки: 3/26
+            </span>
+          </div>
+          <div class="voyage__passenger-tmp passenger-tmp">
+            <h4 class="passenger-tmp__type">Автомобили</h4>
+            <span class="passenger-tmp__occupied-storage">
+              Занятые машиноместа: 7/10
+            </span>
+          </div>
+        </li>
+        <li class="voyage-list__item voyage-adder">
+          <button type="button" class="voyage-adder__btn">
+            &#10010; Добавить рейс
+          </button>
+        </li>
+      </ul>
     </main>
-</body>
+    <dialog open class="app-modal" id="modal-add-voyage">
+      <form class="app-modal__form">
+        <h1 class="modal-add-voyage-header">Добавление рейса</h1>
+        <label for="modal-add-voyage-dest-input" class="app-modal__label">
+          Выберите пункт назначения:
+        </label>
+        <input type="text" id="modal-add-voyage-dest-input" class="app-modal__input" list="destinations"/>
+        <datalist id="destinations">
+          <option value="Мангровый колледж"></option>
+          <option value="Мангровый колледж"></option>
+          <option value="Мангровый колледж"></option>
+          <option value="Мангровый колледж"></option>
+        </datalist>
+        <label for="modal-add-voyage-ferry-input" class="app-modal__label">
+          Выберите паром:
+        </label>
+        <input type="text" id="modal-add-voyage-ferry-input" class="app-modal__input" list="ferries"/>
+        <datalist id="ferries">
+          <option value="Брух"></option>
+          <option value="Сетра"></option>
+          <option value="Кох"></option>
+          <option value="Бака"></option>
+        </datalist>
+        <div class="app-modal__controls">
+          <button type="button" class="app-modal__btn modal-ok-btn">OK</button>
+          <button type="button" class="app-modal__btn modal-cancel-btn">Отмена</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
 </html>
