@@ -1,27 +1,39 @@
-export default class AppModel {
-  static async getVoyages() {
-    try {
-      const getVoyagesResponse = await fetch("http://localhost:4321/getvoyages");
-      const getVoyagesBody = await getVoyagesResponse.json();
+export default class Voyage {
+  #voyageID = null;
+  #voyageDestination = '';
+  #voyageFerry = '';
 
-      if (getVoyagesResponse.status !== 200) {
-        return Promise.reject(getVoyagesBody);
-      }
+  constructor({
+    voyageID = null,
+    destination,
+    ferry
+  }) {
+    this.#voyageID = voyageID || crypto.randomUUID();
+    this.#voyageDestination = destination,
+    this.#voyageFerry = ferry
+  }
 
-      return getVoyagesBody.voyages;
-    } catch (err) {
-      return Promise.reject({
-        timestamp: new Date().toISOString(),
-        statusCode: 0,
-        message: err.message,
-      });
-    }
-  } // getVoyages
+  get voyageID() { return this.#voyageID }
 
-  // add voyage
-  // add passenger
-  // upd passenger
-  // upd passengers (reorder)
-  // delete passenger
-  // transfer passenger
+  render() {
+    const liElement = document.createElement('li');
+    liElement.classList.add(
+      'voyage-list__item',
+      'voyage'
+    );
+    liElement.setAttribute('id', this.#voyageID);
+
+    const h2Element = document.createElement('h2');
+    h2Element.classList.add('voyage__destination');
+    h2Element.innerHTML = this.#voyageDestination;
+    liElement.appendChild(h2Element);
+
+    const h3Element = document.createElement('h3');
+    h3Element.classList.add('voyage__ferry');
+    h3Element.innerHTML = this.#voyageFerry;
+    liElement.appendChild(h3Element);
+
+    const adderElement = document.querySelector('.voyage-adder');
+    adderElement.parentElement.insertBefore(liElement, adderElement);
+  }
 }
