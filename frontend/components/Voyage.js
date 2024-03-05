@@ -25,12 +25,12 @@ export default class Voyage {
 
     const h2Element = document.createElement('h2');
     h2Element.classList.add('voyage__destination');
-    h2Element.innerHTML = this.#voyageDestination;
+    h2Element.innerHTML = `Куда: ${this.#voyageDestination}`;
     liElement.appendChild(h2Element);
 
     const h3Element = document.createElement('h3');
     h3Element.classList.add('voyage__ferry');
-    h3Element.innerHTML = this.#voyageFerry;
+    h3Element.innerHTML = `Судно: ${this.#voyageFerry}`;
     liElement.appendChild(h3Element);
 
     const adderElement = document.querySelector('.voyage-adder');

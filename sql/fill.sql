@@ -19,4 +19,4 @@ INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('e99d5a48-9b56-4afb-a
 INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('02329fb1-9238-4da8-a5f5-219730ac28d9', 'af78fbee-a3ab-4bd6-aeac-0e2730122f43', '2d46ca7b-6385-403d-bb50-316744e4f208');
 INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('93c2bfac-d7f3-4f5c-9690-560ad0df2a31', '4b25bb0c-17df-4b22-968a-9a15ca5e8516', '6e34bc0a-ca58-4a7f-8aa9-f82544c4256c');
 
--- passengers
+-- passengers TODO fill

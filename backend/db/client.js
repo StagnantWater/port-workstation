@@ -42,7 +42,7 @@ export default class DB {
   async getVoyages() {
     try {
       const voyages = await this.#dbClient.query(
-        "SELECT * FROM voyages;"
+        "SELECT voyages.id, destinations.name AS destination_name, ferries.name AS ferry_name FROM voyages, ferries, destinations WHERE ferry_id = ferries.id AND destination_id = destinations.id;",
       );
 
       return voyages.rows;

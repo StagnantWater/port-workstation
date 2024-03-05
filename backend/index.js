@@ -29,7 +29,27 @@ app.use("/", express.static(path.resolve(__dirname, "../dist")));
 
 // get voyages
 app.get('/getvoyages', async (req, res) => {
-  // TODO
+  try {
+    const dbVoyages = await db.getVoyages();
+
+    const voyages = dbVoyages.map((voyage) => ({
+      voyageID: voyage.id,
+      destination: voyage.destination_name,
+      ferry: voyage.ferry_name
+    }));
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.json({ voyages });
+  } catch (err) {
+    res.statusCode = 500;
+    res.statusMessage = 'Internal server error';
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: 500,
+      message: `Getting voyages error: ${err.message || err.error}`
+    });
+  }
 });
 
 // body parsing middleware
