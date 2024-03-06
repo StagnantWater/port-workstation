@@ -1,14 +1,26 @@
 :root {
   --base-font-family: "Inter", sans-serif;
 
-  --white-color: white;
-  --black-color: black;
+  --background-color: #002018;
+  --text-color: #E6E6E6;
+  --primary-color: #000000;
+  --secondary-color: #005558;
+  --accent-color: #05A57A;
+  --accent-transparent-color: #05a57a62;
 
-  --gray-color: #d9d9d9;
+  --navigation-color: var(--primary-color);
+  --navigation-link-color: var(--text-color);
+  --main-header-text-color: var(--text-color);
 
-  --navigation-color: var(--gray-color);
-  --navigation-link-color: var(--black-color);
-  --main-header-text-color: var(--black-color);
+  --voyage-bg-color: var(--primary-color);
+  --voyage-text-color: var(--text-color);
+
+  --passenger-bg-color: var(--secondary-color);
+  --passenger-text-color: var(--text-color);
+  --passenger-add-hover-color: var(--accent-color);
+  --passenger-border-color: var(--accent-color);
+
+  --shadow-color: var(--accent-transparent-color);
 }
 
 * {
@@ -24,6 +36,7 @@ ul {
 body {
   padding: 0 1vw;
   min-height: 100vh;
+  background: var(--background-color);
 }
 
 .app-header {
@@ -42,11 +55,11 @@ body {
 .app-header__app-navigation {
   display: flex;
   gap: 4vw;
-  background: var(--gray-color);
+  background: var(--navigation-color);
   border-radius: 0.5vw;
   padding: 3.25vh 2vw;
-  margin-top: 0.5vw;
-  margin-bottom: 1vw;
+  margin-top: 0.75vw;
+  margin-bottom: 1.5vw;
 }
 
 .navigation__link {
@@ -85,29 +98,61 @@ body {
   box-sizing: border-box;
   border-radius: 1vw;
   padding: 1vw 1.2vw;
-  background-color: var(--gray-color);
+  background-color: var(--voyage-bg-color);
+  box-shadow: 0px 1px 2px var(--shadow-color);
+}
+
+.voyage__destination {
+  color: var(--voyage-text-color);
+}
+
+.voyage__ferry {
+  color: var(--voyage-text-color);
 }
 
 .voyage-adder {
-  background-color: var(--gray-color);
-  transition: background-color 1s ease;
+  background-color: var(--passenger-bg-color);
+  transition: background-color 0.75s ease;
 }
 
 .voyage-adder:hover {
-  background-color: var(--white-color);
+  background-color: var(--passenger-add-hover-color);
 }
 
 .voyage-adder__btn {
   border: none;
   background: none;
+  width: 100%;
+  text-align: left;
   font-weight: 400;
   font-size: clamp(0.75rem, 2vw, 2rem);
-  color: var(--black-color);
+  color: var(--voyage-text-color);
 }
 
 .voyage-adder__btn:hover {
   font-weight: 600;
   cursor: pointer;
+}
+
+.passenger {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1vw;
+  gap: 1vw;
+  margin-bottom: 1vw;
+  border-radius: 0.5vw;
+  background-color: var(--passenger-bg-color);
+}
+
+.passenger__info {
+  display: block;
+}
+
+.passenger__text {
+  color: var(--passenger-text-color);
 }
 
 .app-modal[open] {

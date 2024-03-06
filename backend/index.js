@@ -30,12 +30,21 @@ app.use("/", express.static(path.resolve(__dirname, "../dist")));
 // get voyages
 app.get('/getvoyages', async (req, res) => {
   try {
-    const dbVoyages = await db.getVoyages();
+    const [dbVoyages, dbPassengers] = await Promise.all([db.getVoyages(), db.getPassengers()]);
+
+    const passengers = dbPassengers.map(({ id, name, passenger_type, space_occupied, voyage_id }) => ({
+      passengerID: id,
+      name: name,
+      type: passenger_type,
+      size: space_occupied,
+      voyageID: voyage_id
+    }));
 
     const voyages = dbVoyages.map((voyage) => ({
       voyageID: voyage.id,
       destination: voyage.destination_name,
-      ferry: voyage.ferry_name
+      ferry: voyage.ferry_name,
+      passengers: passengers.filter(passenger => passenger.voyageID === voyage.id)
     }));
 
     res.statusCode = 200;

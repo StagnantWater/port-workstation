@@ -54,4 +54,20 @@ export default class DB {
       });
     }
   }
+
+  async getPassengers() {
+    try {
+      const passengers = await this.#dbClient.query(
+        "SELECT * FROM passengers ORDER BY passenger_type;"
+      );
+
+      return passengers.rows;
+    } catch (error) {
+      console.error("Unable to get passengers, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
 }

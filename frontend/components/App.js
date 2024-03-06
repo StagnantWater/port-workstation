@@ -18,6 +18,15 @@ export default class App {
 
         this.#voyages.push(voyageObj);
         voyageObj.render();
+
+        for (const passenger of voyage.passengers) {
+          voyageObj.addNewPassengerLocal({
+            passengerID: passenger.passengerID,
+            name: passenger.name,
+            type: passenger.type,
+            size: passenger.size
+          });
+        }
       }
     } catch (err) {
       console.error(err);
