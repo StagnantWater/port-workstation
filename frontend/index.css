@@ -107,7 +107,50 @@ body {
 }
 
 .voyage__ferry {
+  margin-bottom: 1vw;
   color: var(--voyage-text-color);
+}
+
+.passenger {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1vw;
+  gap: 1vw;
+  margin-bottom: 1vw;
+  border-radius: 0.5vw;
+  background-color: var(--passenger-bg-color);
+}
+
+.passenger__info {
+  display: block;
+}
+
+.passenger__text {
+  color: var(--passenger-text-color);
+}
+
+.passenger__controls {
+  display: flex;
+  justify-content: center;
+  gap: calc(2vw / 3);
+}
+
+.passenger__controls-btn {
+  width: 2vw;
+  height: 2vw;
+  opacity: 0.6;
+  border: none;
+}
+
+.delete-icon {
+  background: url(assets/delete-forever.svg) center / cover;
+}
+
+.move-icon {
+  background: url(assets/swap-horiz.svg) center / cover;
 }
 
 .voyage-adder {
@@ -132,27 +175,6 @@ body {
 .voyage-adder__btn:hover {
   font-weight: 600;
   cursor: pointer;
-}
-
-.passenger {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1vw;
-  gap: 1vw;
-  margin-bottom: 1vw;
-  border-radius: 0.5vw;
-  background-color: var(--passenger-bg-color);
-}
-
-.passenger__info {
-  display: block;
-}
-
-.passenger__text {
-  color: var(--passenger-text-color);
 }
 
 .app-modal[open] {

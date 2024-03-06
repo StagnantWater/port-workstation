@@ -57,7 +57,22 @@ export default class Passenger {
 
     const controlsDiv = document.createElement('div');
     controlsDiv.classList.add('passenger__controls');
-    controlsDiv.innerHTML = 'controls'; // TODO change it to icons
+
+    const moveButton = document.createElement('button');
+    moveButton.setAttribute('type', 'button');
+    moveButton.classList.add('passenger__controls-btn', 'move-icon');
+    moveButton.addEventListener('click', () => {
+      console.log('MOVE');
+    });
+    controlsDiv.appendChild(moveButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute('type', 'button');
+    deleteButton.classList.add('passenger__controls-btn', 'delete-icon');
+    deleteButton.addEventListener('click', () => {
+      console.log('DELETE');
+    });
+    controlsDiv.appendChild(deleteButton);
 
     liElement.appendChild(controlsDiv);
 

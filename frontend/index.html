@@ -24,30 +24,33 @@
     </header>
     <main class="app-main">
       <ul class="voyage-list">
-        <!-- <li class="voyage-list__item voyage">
+        <!-- <li
+          class="voyage-list__item voyage"
+          id="e99d5a48-9b56-4afb-a02f-a2f8375edad2"
+        >
           <h2 class="voyage__destination">Куда: Полюс Ганта</h2>
           <h3 class="voyage__ferry">Судно: Стимфалис</h3>
           <ul class="voyage__passengers-list">
-            <li class="voyage__passengers-list-item passenger">
+            <li
+              class="voyage__passengers-list-item passenger"
+              id="ef4feabd-50dc-49d9-a484-53457b70960d"
+            >
               <div class="passenger__info">
-                <h4 class="passenger__text passenger__name">Молох</h4>
-                <span class="passenger__text passenger__size">Грузовой автомобиль</span>
+                <h4 class="passenger__text passenger__name">
+                  Шкатулка сапфиров
+                </h4>
+                <span class="passenger__text passenger__size"
+                  >Количество: 5</span
+                >
               </div>
               <div class="passenger__controls">
-                controls
-              </div>
-            </li>
-            <li class="voyage__passengers-list-item passenger">
-              <div class="passenger__info">
-                <h4 class="passenger__text passenger__name">Кофе</h4>
-                <span class="passenger__text passenger__size">Ячейки: 3</span>
-              </div>
-              <div class="passenger__controls">
-                controls
+                <button type="button" class="passenger__controls-btn move-icon"></button>
+                <button type="button" class="passenger__controls-btn delete-icon"></button>
               </div>
             </li>
           </ul>
         </li> -->
+
         <li class="voyage-list__item voyage-adder">
           <button type="button" class="voyage-adder__btn">
             &#10010; Добавить рейс
@@ -61,7 +64,12 @@
         <label for="modal-add-voyage-dest-input" class="app-modal__label">
           Выберите пункт назначения:
         </label>
-        <input type="text" id="modal-add-voyage-dest-input" class="app-modal__input" list="destinations"/>
+        <input
+          type="text"
+          id="modal-add-voyage-dest-input"
+          class="app-modal__input"
+          list="destinations"
+        />
         <datalist id="destinations">
           <option value="Мангровый колледж"></option>
           <option value="Мангровый колледж"></option>
@@ -71,7 +79,12 @@
         <label for="modal-add-voyage-ferry-input" class="app-modal__label">
           Выберите паром:
         </label>
-        <input type="text" id="modal-add-voyage-ferry-input" class="app-modal__input" list="ferries"/>
+        <input
+          type="text"
+          id="modal-add-voyage-ferry-input"
+          class="app-modal__input"
+          list="ferries"
+        />
         <datalist id="ferries">
           <option value="Брух"></option>
           <option value="Сетра"></option>
@@ -80,7 +93,9 @@
         </datalist>
         <div class="app-modal__controls">
           <button type="button" class="app-modal__btn modal-ok-btn">OK</button>
-          <button type="button" class="app-modal__btn modal-cancel-btn">Отмена</button>
+          <button type="button" class="app-modal__btn modal-cancel-btn">
+            Отмена
+          </button>
         </div>
       </form>
     </dialog>
