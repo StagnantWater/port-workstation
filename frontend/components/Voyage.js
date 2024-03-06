@@ -44,15 +44,46 @@ export default class Voyage {
     );
     liElement.setAttribute('id', this.#voyageID);
 
+    const headDiv = document.createElement('div');
+    headDiv.classList.add('voyage__head');
+
+    const infoDiv = document.createElement('div');
+    infoDiv.classList.add('voyage__info');
+
     const h2Element = document.createElement('h2');
     h2Element.classList.add('voyage__destination');
     h2Element.innerHTML = `Куда: ${this.#voyageDestination}`;
-    liElement.appendChild(h2Element);
+    infoDiv.appendChild(h2Element);
 
     const h3Element = document.createElement('h3');
     h3Element.classList.add('voyage__ferry');
     h3Element.innerHTML = `Судно: ${this.#voyageFerry}`;
-    liElement.appendChild(h3Element);
+    infoDiv.appendChild(h3Element);
+
+    headDiv.appendChild(infoDiv);
+
+    const controlsDiv = document.createElement('div');
+    controlsDiv.classList.add('voyage__controls');
+
+    const editButton = document.createElement('button');
+    editButton.setAttribute('type', 'button');
+    editButton.classList.add('voyage__controls-btn', 'edit-icon');
+    editButton.addEventListener('click', () => {
+      console.log('EDIT');
+    });
+    controlsDiv.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.setAttribute('type', 'button');
+    deleteButton.classList.add('voyage__controls-btn', 'delete-icon');
+    deleteButton.addEventListener('click', () => {
+      console.log('DELETE');
+    });
+    controlsDiv.appendChild(deleteButton);
+
+    headDiv.appendChild(controlsDiv);
+
+    liElement.appendChild(headDiv);
 
     const innerUlElement = document.createElement('ul');
     innerUlElement.classList.add('voyage__passengers-list');

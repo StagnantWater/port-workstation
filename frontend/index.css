@@ -102,6 +102,30 @@ body {
   box-shadow: 0px 1px 2px var(--shadow-color);
 }
 
+.voyage__head {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voyage__info {
+  display: block;
+}
+
+.voyage__controls {
+  display: block;
+  padding-right: 0.5vw;
+}
+
+.voyage__controls-btn {
+  width: 2.5vw;
+  height: 2.5vw;
+  opacity: 0.6;
+  border: none;
+}
+
 .voyage__destination {
   color: var(--voyage-text-color);
 }
@@ -147,10 +171,16 @@ body {
 
 .delete-icon {
   background: url(assets/delete-forever.svg) center / cover;
+  background-color: #005558;
 }
 
 .move-icon {
   background: url(assets/swap-horiz.svg) center / cover;
+}
+
+.edit-icon {
+  background: url(assets/edit.svg) center / cover;
+  background-color: #005558;
 }
 
 .voyage-adder {
