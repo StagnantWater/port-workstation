@@ -19,4 +19,12 @@ INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('e99d5a48-9b56-4afb-a
 INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('02329fb1-9238-4da8-a5f5-219730ac28d9', 'af78fbee-a3ab-4bd6-aeac-0e2730122f43', '2d46ca7b-6385-403d-bb50-316744e4f208');
 INSERT INTO voyages (id, destination_id, ferry_id) VALUES ('93c2bfac-d7f3-4f5c-9690-560ad0df2a31', '4b25bb0c-17df-4b22-968a-9a15ca5e8516', '6e34bc0a-ca58-4a7f-8aa9-f82544c4256c');
 
--- passengers TODO fill
+-- passengers
+-- auto
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('1f679ff9-a040-4571-bbb9-1e37fa4af38e', 'Парсиваль', 'auto', 1, '02329fb1-9238-4da8-a5f5-219730ac28d9');
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('4dce9014-991d-4ae6-83ae-bc65680a065c', 'Альтани', 'auto', 2, '02329fb1-9238-4da8-a5f5-219730ac28d9');
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('efe21a83-82db-4731-8096-2e7bd0c1b6f4', 'Молох', 'auto', 3, '93c2bfac-d7f3-4f5c-9690-560ad0df2a31');
+-- cargo
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('ef4feabd-50dc-49d9-a484-53457b70960d', 'Шкатулка сапфиров', 'cargo', 5, 'e99d5a48-9b56-4afb-a02f-a2f8375edad2');
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('98121f8e-ad55-4830-95bb-9e7308dfe3d2', 'Гробо-колонисты', 'cargo', 20, '02329fb1-9238-4da8-a5f5-219730ac28d9');
+INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ('8d445760-1882-4cc7-8fc4-0c53f723f7b1', 'Зеркальные ловушки', 'cargo', 10, '93c2bfac-d7f3-4f5c-9690-560ad0df2a31');
