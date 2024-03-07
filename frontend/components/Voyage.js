@@ -34,7 +34,7 @@ export default class Voyage {
     const newPassengerElement = newPassenger.render();
     document.querySelector(`[id="${this.#voyageID}"] .voyage__passengers-list`)
       .appendChild(newPassengerElement);
-  }
+  } // addNewPassengerLocal
 
   render() {
     const liElement = document.createElement('li');
@@ -91,5 +91,5 @@ export default class Voyage {
 
     const adderElement = document.querySelector('.voyage-adder');
     adderElement.parentElement.insertBefore(liElement, adderElement);
-  }
+  } // render
 }

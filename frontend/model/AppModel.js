@@ -18,6 +18,44 @@ export default class AppModel {
       }
     } // getVoyages
 
+    static async getDestinations() {
+      try {
+        const getDestinationsResponse = await fetch("http://localhost:4321/getdestinations");
+        const getDestinationsBody = await getDestinationsResponse.json();
+
+        if (getDestinationsResponse.status !== 200) {
+          return Promise.reject(getDestinationsBody);
+        }
+
+        return getDestinationsBody.destinations;
+      } catch (err) {
+        return Promise.reject({
+          timestamp: new Date().toISOString(),
+          statusCode: 0,
+          message: err.message,
+        });
+      }
+    } // getDestinations
+
+    static async getFerries() {
+      try {
+        const getFerriesResponse = await fetch("http://localhost:4321/getferries");
+        const getFerriesBody = await getFerriesResponse.json();
+
+        if (getFerriesResponse.status !== 200) {
+          return Promise.reject(getFerriesBody);
+        }
+
+        return getFerriesBody.ferries;
+      } catch (err) {
+        return Promise.reject({
+          timestamp: new Date().toISOString(),
+          statusCode: 0,
+          message: err.message,
+        });
+      }
+    } // getFerries
+
     // add voyage
     // add passenger
     // upd passenger

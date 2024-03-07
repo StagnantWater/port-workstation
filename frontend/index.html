@@ -33,36 +33,30 @@
     </main>
     <dialog class="app-modal" id="modal-add-voyage">
       <form class="app-modal__form">
-        <h1 class="modal-add-voyage-header app-modal__header">Добавление рейса</h1>
-        <label for="modal-add-voyage-dest-input" class="app-modal__label">
+        <h1 class="modal-add-voyage__header app-modal__header">Добавление рейса</h1>
+        <label for="modal-add-voyage__dest-input" class="app-modal__label">
           Выберите пункт назначения:
         </label>
         <input
           type="text"
-          id="modal-add-voyage-dest-input"
+          id="modal-add-voyage__dest-input"
           class="app-modal__input"
-          list="destinations"
+          list="modal-add-voyage__destinations-datalist"
         />
-        <datalist id="destinations">
-          <option value="Мангровый колледж"></option>
-          <option value="Мангровый колледж"></option>
-          <option value="Мангровый колледж"></option>
-          <option value="Мангровый колледж"></option>
+        <datalist id="modal-add-voyage__destinations-datalist">
+          <option value="Test1"></option>
         </datalist>
-        <label for="modal-add-voyage-ferry-input" class="app-modal__label">
+        <label for="modal-add-voyage__ferry-input" class="app-modal__label">
           Выберите паром:
         </label>
         <input
           type="text"
           id="modal-add-voyage-ferry-input"
           class="app-modal__input"
-          list="ferries"
+          list="modal-add-voyage__ferries-datalist"
         />
-        <datalist id="ferries">
-          <option value="Брух"></option>
-          <option value="Сетра"></option>
-          <option value="Кох"></option>
-          <option value="Бака"></option>
+        <datalist id="modal-add-voyage__ferries-datalist">
+          <option value="Test2"></option>
         </datalist>
         <div class="app-modal__controls">
           <button type="button" class="app-modal__btn modal-ok-btn">OK</button>

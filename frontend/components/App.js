@@ -28,15 +28,30 @@ export default class App {
     addVoyageModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
     addVoyageModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
     addVoyageModal.addEventListener('close', cancelHandler);
-  }
+  } // initAddVoyageModal
+
+  renderAddModal() {
+    const destDatalist = document.getElementById('modal-add-voyage__destinations-datalist');
+
+    const testOption = document.createElement('option');
+    testOption.setAttribute('value', 'DESTINATION');
+
+    const testOption1 = document.createElement('option');
+    testOption1.setAttribute('value', 'DESTINATION1');
+
+    const arr = [testOption, testOption1]
+
+    //get array of option elements with destinations' and ferries' names
+
+    destDatalist.replaceChildren(...arr);
+  } // renderAddModal
 
   async init() {
-    // init add voyage modal
-    // event listener for add voyage button press
     this.initAddVoyageModal();
 
     document.querySelector('.voyage-adder__btn')
       .addEventListener('click', () => {
+          this.renderAddModal();
           document.getElementById('modal-add-voyage').showModal();
         });
 
@@ -64,5 +79,5 @@ export default class App {
     } catch (err) {
       console.error(err);
     }
-  }
+  } // init
 }

@@ -77,5 +77,5 @@ export default class Passenger {
     liElement.appendChild(controlsDiv);
 
     return liElement;
-  }
+  } // render
 }
