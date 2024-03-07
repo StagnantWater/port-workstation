@@ -7,10 +7,10 @@ export default class App {
   initAddVoyageModal() {
     const addVoyageModal = document.getElementById('modal-add-voyage');
 
-    const cancelHandler = () => {
+    const closeHandler = () => {
       addVoyageModal.close();
       // localStorage.setItem('addTaskTasklistID', '');
-      // addTaskModal.querySelector('.app-modal__input').value = '';
+      addVoyageModal.querySelector('.app-modal__form').reset();
     };
 
     const okHandler = () => {
@@ -22,12 +22,12 @@ export default class App {
       //     .appendNewTask({ text: modalInput.value });
       // }
 
-      cancelHandler();
+      closeHandler();
     };
 
     addVoyageModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
-    addVoyageModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
-    addVoyageModal.addEventListener('close', cancelHandler);
+    addVoyageModal.querySelector('.modal-cancel-btn').addEventListener('click', closeHandler);
+    addVoyageModal.addEventListener('close', closeHandler);
   } // initAddVoyageModal
 
   renderAddModal() {
