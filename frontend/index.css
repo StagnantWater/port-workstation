@@ -20,6 +20,11 @@
   --passenger-add-hover-color: var(--accent-color);
   --passenger-border-color: var(--accent-color);
 
+  --modal-bg-color: var(--primary-color);
+  --modal-text-color: var(--text-color);
+  --modal-input-bg-color: var(--background-color);
+  --modal-input-border-color: var(--secondary-color);
+
   --shadow-color: var(--accent-transparent-color);
 }
 
@@ -214,10 +219,15 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
+  background-color: var(--modal-bg-color);
 }
 
 .app-modal::backdrop {
   backdrop-filter: blur(10px);
+}
+
+.app-modal__header {
+  color: var(--modal-text-color);
 }
 
 .app-modal__form {
@@ -229,12 +239,17 @@ body {
   gap: 1vh;
 }
 
+.app-modal__label {
+  color: var(--modal-text-color);
+}
+
 .app-modal__input {
   padding: 0.6vw;
   border-radius: 0.7vw;
   font-size: clamp(0.7rem, 1.5vw, 1.5rem);
-  color: var(--black-color);
-  border: 2px solid var(--black-color);
+  background-color: var(--modal-input-bg-color);
+  color: var(--modal-text-color);
+  border: 2px solid var(--modal-input-border-color);
 }
 
 .app-modal__controls {
