@@ -22,6 +22,7 @@ export default class App {
       //   this.#tasklists.find(tasklist => tasklist.tasklistID === tasklistID)
       //     .appendNewTask({ text: modalInput.value });
       // }
+      this.addNotification({ text: 'OK', type: 'success' });
 
       closeHandler();
     };
@@ -66,6 +67,29 @@ export default class App {
     ferryDatalist.replaceChildren(...ferryOptions);
   } // renderAddVoyageModal
 
+  initNotifications() {
+    const notifications = document.getElementById('app-notifications');
+    notifications.show();
+  } // initNotifications
+
+  addNotification = ({ text, type }) => {
+    const notifications = document.getElementById('app-notifications');
+
+    const notificationID = crypto.randomUUID();
+    const notification = document.createElement('div');
+    notification.classList.add('notification',
+      type === 'success' ? 'notification-success' : 'notification-error'
+    );
+    notification.setAttribute('id', notificationID);
+    notification.innerHTML = text;
+
+    notifications.appendChild(notification);
+
+    setTimeout(() => {
+      document.getElementById(notificationID).remove();
+    }, 5000);
+  } // addNotification
+
   async init() {
     this.initAddVoyageModal();
 
@@ -97,6 +121,7 @@ export default class App {
         }
       }
     } catch (err) {
+      this.addNotification({ text: err.message, type: 'error' });
       console.error(err);
     }
   } // init

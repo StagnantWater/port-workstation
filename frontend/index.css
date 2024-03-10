@@ -7,6 +7,8 @@
   --secondary-color: #005558;
   --accent-color: #05A57A;
   --accent-transparent-color: #05a57a62;
+  --success-color: #21C79B;
+  --error-color: #E3616F;
 
   --navigation-color: var(--primary-color);
   --navigation-link-color: var(--text-color);
@@ -24,6 +26,8 @@
   --modal-text-color: var(--text-color);
   --modal-input-bg-color: var(--background-color);
   --modal-input-border-color: var(--secondary-color);
+
+  --notifications-text-color: black;
 
   --shadow-color: var(--accent-transparent-color);
 }
@@ -261,4 +265,33 @@ body {
 .app-modal__btn {
   cursor: pointer;
   padding: 5px;
+}
+
+.app-notifications {
+  border: none;
+  right: 0;
+  bottom: 3vw;
+  left: 100vw;
+  transform: translateX(calc(-100% - 3vw));
+  background: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notification {
+  box-sizing: border-box;
+  border-radius: 0.5vw;
+  padding: 10px;
+  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+  min-width: 15vw;
+  color: var(--text-color);
+}
+
+.notification-success {
+  background-color: var(--success-color);
+}
+
+.notification-error {
+  background-color: var(--error-color);
 }
