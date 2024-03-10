@@ -43,8 +43,10 @@ app.get('/getvoyages', async (req, res) => {
 
     const voyages = dbVoyages.map((voyage) => ({
       voyageID: voyage.id,
-      destination: voyage.destination_name,
-      ferry: voyage.ferry_name,
+      destinationID: voyage.destination_id,
+      destinationName: voyage.destination_name,
+      ferryID: voyage.ferry_id,
+      ferryName: voyage.ferry_name,
       passengers: passengers.filter(passenger => passenger.voyageID === voyage.id)
     }));
 

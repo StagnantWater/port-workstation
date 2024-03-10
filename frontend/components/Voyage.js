@@ -9,11 +9,13 @@ export default class Voyage {
   constructor({
     voyageID = null,
     destination,
-    ferry
+    ferry,
+    addNotification
   }) {
     this.#voyageID = voyageID || crypto.randomUUID();
     this.#voyageDestination = destination;
     this.#voyageFerry = ferry;
+    this.addNotification = addNotification;
   }
 
   get voyageID() { return this.#voyageID }
@@ -52,12 +54,12 @@ export default class Voyage {
 
     const h2Element = document.createElement('h2');
     h2Element.classList.add('voyage__destination');
-    h2Element.innerHTML = `Куда: ${this.#voyageDestination}`;
+    h2Element.innerHTML = `Куда: ${this.#voyageDestination.name}`;
     infoDiv.appendChild(h2Element);
 
     const h3Element = document.createElement('h3');
     h3Element.classList.add('voyage__ferry');
-    h3Element.innerHTML = `Судно: ${this.#voyageFerry}`;
+    h3Element.innerHTML = `Судно: ${this.#voyageFerry.name}`;
     infoDiv.appendChild(h3Element);
 
     headDiv.appendChild(infoDiv);

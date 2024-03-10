@@ -5,8 +5,6 @@ import Voyage from "./Voyage";
 
 export default class App {
   #voyages = [];
-  #destinations = [];
-  #ferries = [];
 
   initAddVoyageModal() {
     const addVoyageModal = document.getElementById('modal-add-voyage');
@@ -32,6 +30,31 @@ export default class App {
       } catch (err) {
         this.addNotification({ text: `Рейс не был добавлен: ${err.message}`, type: 'error' });
         console.error(err);
+      }
+
+      const addVoyage = async ({ destination, ferry }) => {
+        const voyageID = crypto.randomUUID();
+        try {
+          const addVoyageResult = await AppModel.addVoyage({
+            voyageID: voyageID,
+            destinationID: destination.destinationID,
+            ferryID: ferry.ferryID
+          });
+
+          const newVoyage = new Voyage({
+            voyageID: voyageID,
+            destination: destination,
+            ferry: ferry,
+            addNotification: this.addNotification
+          });
+
+          this.#voyages.push(newVoyage);
+          newVoyage.render();
+
+          this.addNotification({ text: addVoyageResult.message, type: 'success' });
+        } catch (err) {
+          throw new Error(err.message);
+        }
       }
 
       closeHandler();
@@ -102,6 +125,7 @@ export default class App {
 
   async init() {
     this.initAddVoyageModal();
+    this.initNotifications();
 
     document.querySelector('.voyage-adder__btn')
       .addEventListener('click', () => {
@@ -112,10 +136,21 @@ export default class App {
     try {
       const voyages = await AppModel.getVoyages();
       for (const voyage of voyages) {
+        const destination = new Destination({
+          destinationID: voyage.destinationID,
+          name: voyage.destinationName
+        });
+        const ferry = new Ferry({
+          ferryID: voyage.ferryID,
+          name: voyage.ferryName,
+          hold: voyage.ferryHold,
+          autopark: voyage.ferryAutopark
+        });
         const voyageObj = new Voyage({
           voyageID: voyage.voyageID,
-          destination: voyage.destination,
-          ferry: voyage.ferry
+          destination: destination,
+          ferry: ferry,
+          addNotification: this.addNotification
         });
 
         this.#voyages.push(voyageObj);
