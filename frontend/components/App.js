@@ -23,7 +23,7 @@ export default class App {
       this.addNotification({ text: err.message, type: 'error' });
       console.error(err);
     }
-  };
+  }; // deleteVoyage
 
   initAddVoyageModal() {
     const addVoyageModal = document.getElementById('modal-add-voyage');
@@ -141,6 +141,69 @@ export default class App {
     deleteVoyageModal.addEventListener('close', cancelHandler);
   }
 
+  initEditVoyageModal() {
+    const editVoyageModal = document.getElementById('modal-edit-voyage');
+
+    const cancelHandler = () => {
+      editVoyageModal.close();
+      localStorage.setItem('editVoyageID', '');
+      editVoyageModal.querySelector('.app-modal__form').reset();
+    };
+
+    const editVoyage = async ({ voyageID, destination }) => {
+      try {
+        const updateVoyageResult = await AppModel.updateVoyage({voyageID: voyageID, destinationID: destination.destinationID});
+        const editVoyageIndex = this.#voyages.findIndex(voyage => voyage.voyageID === voyageID);
+        this.#voyages[editVoyageIndex].destination = destination;
+        document.querySelector(`[id="${voyageID}"] h2.voyage__destination`).innerHTML = `Куда: ${destination.name}`;
+        this.addNotification({ text: `${updateVoyageResult.message}: ${destination.name}`, type: 'success' });
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    }
+
+    const okHandler = async () => {
+      try {
+        const voyageID = localStorage.getItem('editVoyageID');
+
+        if (voyageID) {
+          const destDatalist = document.getElementById('modal-edit-voyage__destinations-datalist');
+          const destInput = document.getElementById('modal-edit-voyage__dest-input');
+          const chosenDestOption = destDatalist.options.namedItem(destInput.value);
+          const newDestination = Destination.getFromOption(chosenDestOption);
+
+          await editVoyage({ voyageID: voyageID, destination: newDestination });
+        }
+      } catch (err) {
+        this.addNotification({ text: `Рейс не был изменен: ${err.message}`, type: 'error' });
+        console.error(err);
+      }
+
+      cancelHandler();
+    };
+
+    editVoyageModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
+    editVoyageModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
+    editVoyageModal.addEventListener('close', cancelHandler);
+  }
+
+  static async renderEditVoyageModal() {
+    const destDatalist = document.getElementById('modal-edit-voyage__destinations-datalist');
+    const destOptions = [];
+    const destinations = await AppModel.getDestinations();
+
+    for (const dest of destinations) {
+      const destObj = new Destination({
+        destinationID: dest.destinationID,
+        name: dest.name
+      });
+
+      destOptions.push(destObj.renderAsOption());
+    }
+
+    destDatalist.replaceChildren(...destOptions);
+  } // renderEditVoyageModal
+
   initNotifications() {
     const notifications = document.getElementById('app-notifications');
     notifications.show();
@@ -166,6 +229,7 @@ export default class App {
 
   async init() {
     this.initAddVoyageModal();
+    this.initEditVoyageModal();
     this.initDeleteVoyageModal();
     this.initNotifications();
 

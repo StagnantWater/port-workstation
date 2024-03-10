@@ -140,6 +140,37 @@ export default class AppModel {
         message: err.message,
       });
     }
+  } // deleteVoyage
+
+  static async updateVoyage({ voyageID, destinationID } = { voyageID: null, destinationID: null }) {
+    try {
+      const updateVoyageResponse = await fetch(
+        `http://localhost:4321/voyages/${voyageID}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ destinationID }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (updateVoyageResponse.status !== 200) {
+        const updateVoyageBody = await updateVoyageResponse.json();
+        return Promise.reject(updateVoyageBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Рейс изменен`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
   }
 
   // add passenger

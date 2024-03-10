@@ -1,4 +1,5 @@
 import Passenger from "./Passenger";
+import App from "./App";
 
 export default class Voyage {
   #voyageID = null;
@@ -18,13 +19,20 @@ export default class Voyage {
     this.addNotification = addNotification;
   }
 
-  get voyageID() { return this.#voyageID }
+  get voyageID() { return this.#voyageID; }
 
-  get destinationName() { return this.#voyageDestination.name }
+  get destinationName() { return this.#voyageDestination.name; }
 
-  get ferryName() { return this.#voyageFerry.name }
+  get ferryName() { return this.#voyageFerry.name; }
 
-  get isEmpty() { return (!this.#passengers || !this.#passengers.length) }
+  get isEmpty() { return (!this.#passengers || !this.#passengers.length); }
+
+  get destination() { return this.#voyageDestination; }
+  set destination(value) {
+    if(value) {
+      this.#voyageDestination = value;
+    }
+  }
 
   pushPassenger = ({ passenger }) => this.#passengers.push(passenger);
 
@@ -77,7 +85,9 @@ export default class Voyage {
     editButton.setAttribute('type', 'button');
     editButton.classList.add('voyage__controls-btn', 'edit-icon');
     editButton.addEventListener('click', () => {
-      console.log('EDIT');
+      localStorage.setItem('editVoyageID', this.#voyageID);
+      App.renderEditVoyageModal();
+      document.getElementById('modal-edit-voyage').showModal();
     });
     controlsDiv.appendChild(editButton);
 

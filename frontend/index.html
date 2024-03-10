@@ -64,7 +64,27 @@
         </div>
       </form>
     </dialog>
-    <dialog class="app-notifications" id="app-notifications">
+    <dialog class="app-modal" id="modal-edit-voyage">
+      <form class="app-modal__form">
+        <h1 class="modal-edit-voyage__header app-modal__header">Изменение рейса</h1>
+        <label for="modal-edit-voyage__dest-input" class="app-modal__label">
+          Выберите новый пункт назначения:
+        </label>
+        <input
+          type="text"
+          id="modal-edit-voyage__dest-input"
+          class="app-modal__input"
+          list="modal-edit-voyage__destinations-datalist"
+        />
+        <datalist id="modal-edit-voyage__destinations-datalist">
+        </datalist>
+        <div class="app-modal__controls">
+          <button type="button" class="app-modal__btn modal-ok-btn">OK</button>
+          <button type="button" class="app-modal__btn modal-cancel-btn">
+            Отмена
+          </button>
+        </div>
+      </form>
     </dialog>
     <dialog class="app-modal" id="modal-delete-voyage">
       <form class="app-modal__form">
@@ -75,6 +95,8 @@
           <button type="button" class="app-modal__btn modal-cancel-btn">Отмена</button>
         </div>
       </form>
+    </dialog>
+    <dialog class="app-notifications" id="app-notifications">
     </dialog>
   </body>
 </html>

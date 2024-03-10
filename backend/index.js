@@ -122,6 +122,35 @@ app.delete('/voyages/:voyageID', async (req, res) => {
   }
 });
 
+// update voyage
+app.patch('/voyages/:voyageID', async (req, res) => {
+  try {
+    const { voyageID } = req.params;
+    const { destinationID } = req.body;
+    await db.updateVoyage({ voyageID, destinationID });
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.send();
+  } catch (err) {
+    switch (err.type) {
+      case 'client':
+        res.statusCode = 400;
+        res.statusMessage = 'Bad request';
+        break;
+      default:
+        res.statusCode = 500;
+        res.statusMessage = 'Internal server error';
+        break;
+    }
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: res.statusCode,
+      message: `Update voyage error: ${err.error.message || err.error}`
+    });
+  }
+});
+
 // get destinations
 app.get('/destinations', async (req, res) => {
   try {

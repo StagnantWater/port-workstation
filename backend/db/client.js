@@ -102,6 +102,27 @@ export default class DB {
     }
   }
 
+  async updateVoyage({ voyageID, destinationID } = { voyageID: null, destinationID: null }) {
+    if (!voyageID || !destinationID) {
+      const errMsg = `Edit voyage error: wrong params (voyageID: ${voyageID}, destinationID: ${destinationID})`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
+
+    try {
+      await this.#dbClient.query("UPDATE voyages SET destination_id = $1 WHERE id = $2;", [destinationID, voyageID]);
+    } catch (error) {
+      console.error("Unable to edit voyage, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
+
   async getPassengers() {
     try {
       const passengers = await this.#dbClient.query(
