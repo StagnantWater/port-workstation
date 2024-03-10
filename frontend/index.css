@@ -247,6 +247,10 @@ body {
   color: var(--modal-text-color);
 }
 
+.app-modal__question {
+  color: var(--modal-text-color);
+}
+
 .app-modal__input {
   padding: 0.6vw;
   border-radius: 0.7vw;

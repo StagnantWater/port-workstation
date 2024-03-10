@@ -24,6 +24,8 @@ export default class Voyage {
 
   get ferryName() { return this.#voyageFerry.name }
 
+  get isEmpty() { return (!this.#passengers || !this.#passengers.length) }
+
   pushPassenger = ({ passenger }) => this.#passengers.push(passenger);
 
   getPassengerByID = ({ passengerID }) => this.#passengers.find(passenger => passenger.passengerID === passengerID);
@@ -83,7 +85,13 @@ export default class Voyage {
     deleteButton.setAttribute('type', 'button');
     deleteButton.classList.add('voyage__controls-btn', 'delete-icon');
     deleteButton.addEventListener('click', () => {
-      console.log('DELETE');
+      localStorage.setItem('deleteVoyageID', this.#voyageID);
+
+      const deleteVoyageModal = document.getElementById('modal-delete-voyage');
+      deleteVoyageModal.querySelector('.app-modal__question')
+        .innerHTML = `Рейс '${this.destinationName} (${this.ferryName})' будет удален. Продолжить?`;
+
+      deleteVoyageModal.showModal();
     });
     controlsDiv.appendChild(deleteButton);
 

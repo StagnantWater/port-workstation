@@ -118,6 +118,30 @@ export default class AppModel {
     }
   } // addVoyage
 
+  static async deleteVoyage({ voyageID } = { voyageID: null }) {
+    try {
+      const deleteVoyageResponse = await fetch(`http://localhost:4321/voyages/${voyageID}`, {
+        method: "DELETE",
+      });
+
+      if (deleteVoyageResponse.status !== 200) {
+        const deleteVoyageBody = await deleteVoyageResponse.json();
+        return Promise.reject(deleteVoyageBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Рейс удален`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  }
+
   // add passenger
   // upd passenger
   // upd passengers (reorder)

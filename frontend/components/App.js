@@ -6,6 +6,25 @@ import Voyage from "./Voyage";
 export default class App {
   #voyages = [];
 
+  deleteVoyage = async ({ voyageID }) => {
+    try {
+      const deleteVoyageIndex = this.#voyages.findIndex(voyage => voyage.voyageID === voyageID);
+      if(!this.#voyages[deleteVoyageIndex].isEmpty) {
+        throw new Error('Можно удалить только пустой рейс');
+      }
+
+      const deleteVoyageResult = await AppModel.deleteVoyage({ voyageID });
+
+      const [deletedVoyage] = this.#voyages.splice(deleteVoyageIndex, 1);
+      document.getElementById(voyageID).remove();
+
+      this.addNotification({ text: `${deleteVoyageResult.message}: ${deletedVoyage.destinationName} (${deletedVoyage.ferryName})`, type: 'success' });
+    } catch (err) {
+      this.addNotification({ text: err.message, type: 'error' });
+      console.error(err);
+    }
+  };
+
   initAddVoyageModal() {
     const addVoyageModal = document.getElementById('modal-add-voyage');
 
@@ -32,7 +51,7 @@ export default class App {
         this.#voyages.push(newVoyage);
         newVoyage.render();
 
-        this.addNotification({ text: `${addVoyageResult.message}: ${newVoyage.destinationName} (${newVoyage.ferryName}`, type: 'success' });
+        this.addNotification({ text: `${addVoyageResult.message}: ${newVoyage.destinationName} (${newVoyage.ferryName})`, type: 'success' });
       } catch (err) {
         throw new Error(err.message);
       }
@@ -99,6 +118,29 @@ export default class App {
     ferryDatalist.replaceChildren(...ferryOptions);
   } // renderAddVoyageModal
 
+  initDeleteVoyageModal() {
+    const deleteVoyageModal = document.getElementById('modal-delete-voyage');
+
+    const cancelHandler = () => {
+      deleteVoyageModal.close();
+      localStorage.setItem('deleteVoyageID', '');
+    };
+
+    const okHandler = () => {
+      const voyageID = localStorage.getItem('deleteVoyageID');
+
+      if (voyageID) {
+        this.deleteVoyage({ voyageID });
+      }
+
+      cancelHandler();
+    };
+
+    deleteVoyageModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
+    deleteVoyageModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
+    deleteVoyageModal.addEventListener('close', cancelHandler);
+  }
+
   initNotifications() {
     const notifications = document.getElementById('app-notifications');
     notifications.show();
@@ -124,6 +166,7 @@ export default class App {
 
   async init() {
     this.initAddVoyageModal();
+    this.initDeleteVoyageModal();
     this.initNotifications();
 
     document.querySelector('.voyage-adder__btn')
