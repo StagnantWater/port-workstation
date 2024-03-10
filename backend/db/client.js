@@ -70,4 +70,61 @@ export default class DB {
       });
     }
   }
+
+  async getDestinations() {
+    try {
+      const destinations = await this.#dbClient.query(
+        "SELECT * FROM destinations;"
+      );
+
+      return destinations.rows;
+    } catch (error) {
+      console.error("Unable to get destinations, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
+
+  async getFerries() {
+    try {
+      const ferries = await this.#dbClient.query(
+        "SELECT * FROM ferries;"
+      );
+
+      return ferries.rows;
+    } catch (error) {
+      console.error("Unable to get ferries, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
+
+  async getVoyageByFerry({ ferryID } = { ferryID: null }) {
+    if (!ferryID) {
+      const errMsg = `Wrong params (ferryID: ${ferryID})`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
+    try {
+      const voyage = await this.#dbClient.query(
+        "SELECT id FROM voyages WHERE ferry_id = $1;",
+        [ferryID]
+      );
+
+      return voyage.rows;
+    } catch (error) {
+      console.error("Unable to get voyage by ferryID, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
 }

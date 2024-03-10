@@ -1,4 +1,6 @@
 import AppModel from "../model/AppModel";
+import Destination from "./Destination";
+import Ferry from "./Ferry";
 import Voyage from "./Voyage";
 
 export default class App {
@@ -9,7 +11,6 @@ export default class App {
 
     const closeHandler = () => {
       addVoyageModal.close();
-      // localStorage.setItem('addTaskTasklistID', '');
       addVoyageModal.querySelector('.app-modal__form').reset();
     };
 
@@ -30,28 +31,47 @@ export default class App {
     addVoyageModal.addEventListener('close', closeHandler);
   } // initAddVoyageModal
 
-  renderAddModal() {
+  async renderAddVoyageModal() {
     const destDatalist = document.getElementById('modal-add-voyage__destinations-datalist');
+    const destOptions = [];
+    const destinations = await AppModel.getDestinations();
 
-    const testOption = document.createElement('option');
-    testOption.setAttribute('value', 'DESTINATION');
+    for (const dest of destinations) {
+      const destObj = new Destination({
+        destinationID: dest.destinationID,
+        name: dest.name
+      });
 
-    const testOption1 = document.createElement('option');
-    testOption1.setAttribute('value', 'DESTINATION1');
+      destOptions.push(destObj.renderAsOption());
+    }
 
-    const arr = [testOption, testOption1]
+    destDatalist.replaceChildren(...destOptions);
 
-    //get array of option elements with destinations' and ferries' names
+    const ferryDatalist = document.getElementById('modal-add-voyage__ferries-datalist');
+    const ferryOptions = [];
+    const ferries = await AppModel.getFerries();
 
-    destDatalist.replaceChildren(...arr);
-  } // renderAddModal
+    for (const ferry of ferries) {
+      const ferryObj = new Ferry({
+        ferryID: ferry.ferryID,
+        name: ferry.name,
+        hold: ferry.hold,
+        autopark: ferry.autopark
+      });
+      if (await AppModel.checkFerryAssignment({ferryID: ferryObj.ferryID}) === false) {
+        ferryOptions.push(ferryObj.renderAsOption());
+      }
+    }
+
+    ferryDatalist.replaceChildren(...ferryOptions);
+  } // renderAddVoyageModal
 
   async init() {
     this.initAddVoyageModal();
 
     document.querySelector('.voyage-adder__btn')
       .addEventListener('click', () => {
-          this.renderAddModal();
+          this.renderAddVoyageModal();
           document.getElementById('modal-add-voyage').showModal();
         });
 

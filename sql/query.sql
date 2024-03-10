@@ -2,7 +2,13 @@
 SELECT * FROM voyages;
 SELECT * FROM ferries;
 SELECT * FROM destinations;
-SELECT * FROM passengers;
+SELECT * FROM passengers ORDER BY passenger_type;
 
--- Voyage info (human readable, suitable for rendering)
+-- Voyage info (human readable)
 SELECT voyages.id, destinations.name AS destination_name, ferries.name AS ferry_name FROM voyages, ferries, destinations WHERE ferry_id = ferries.id AND destination_id = destinations.id;
+
+-- Cargo & auto by voyage
+SELECT passengers.name FROM passengers, voyages WHERE passengers.voyage_id = voyages.id;
+
+-- Assignment check
+SELECT id FROM voyages WHERE ferry_id = <ferry_id>;

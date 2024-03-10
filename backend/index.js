@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import DB from "./db/client.js";
+import { log } from "console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,6 +64,83 @@ app.get('/getvoyages', async (req, res) => {
 
 // body parsing middleware
 app.use('/getvoyages', express.json());
+
+// get destinations
+app.get('/getdestinations', async (req, res) => {
+  try {
+    const dbDestinations = await db.getDestinations();
+
+    const destinations = dbDestinations.map(({ id, name }) => ({
+      destinationID: id,
+      name: name,
+    }));
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.json({ destinations });
+  } catch (err) {
+    res.statusCode = 500;
+    res.statusMessage = 'Internal server error';
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: 500,
+      message: `Getting destinations error: ${err.message || err.error}`
+    });
+  }
+});
+
+// body parsing middleware
+app.use('/getdestinations', express.json());
+
+// get ferries
+app.get('/getferries', async (req, res) => {
+  try {
+    const dbFerries = await db.getFerries();
+
+    const ferries = dbFerries.map(({ id, name, hold, autopark }) => ({
+      ferryID: id,
+      name: name,
+      hold: hold,
+      autopark: autopark
+    }));
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.json({ ferries });
+  } catch (err) {
+    res.statusCode = 500;
+    res.statusMessage = 'Internal server error';
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: 500,
+      message: `Getting ferries error: ${err.message || err.error}`
+    });
+  }
+});
+
+// body parsing middleware
+app.use('/getferries', express.json());
+
+app.use('/isassigned/:ferryID', express.json());
+app.post('/isassigned/:ferryID', async (req, res) => {
+  try {
+    const { ferryID } = req.params;
+    const getVoyageByFerryResponse = await db.getVoyageByFerry({ferryID: ferryID});
+
+    // 201 - not assigned, 202 - assigned
+    res.statusCode = (JSON.stringify(getVoyageByFerryResponse) === '[]') ? 201 : 202;
+    res.statusMessage = 'OK';
+    res.send();
+  } catch (err) {
+    res.statusCode = 500;
+    res.statusMessage = 'Internal server error';
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: 500,
+      message: `Ferry check error: ${err.message || err.error}`
+    });
+  }
+});
 
 const server = app.listen(Number(appPort), appHost, async () => {
   try {
