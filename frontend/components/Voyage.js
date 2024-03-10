@@ -20,6 +20,10 @@ export default class Voyage {
 
   get voyageID() { return this.#voyageID }
 
+  get destinationName() { return this.#voyageDestination.name }
+
+  get ferryName() { return this.#voyageFerry.name }
+
   pushPassenger = ({ passenger }) => this.#passengers.push(passenger);
 
   getPassengerByID = ({ passengerID }) => this.#passengers.find(passenger => passenger.passengerID === passengerID);

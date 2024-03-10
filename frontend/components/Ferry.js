@@ -1,5 +1,3 @@
-import AppModel from "../model/AppModel";
-
 export default class Ferry {
   #ferryID = null;
   #name = "";

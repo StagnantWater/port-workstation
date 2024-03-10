@@ -2,7 +2,7 @@ export default class AppModel {
   static async getVoyages() {
     try {
       const getVoyagesResponse = await fetch(
-        "http://localhost:4321/getvoyages"
+        "http://localhost:4321/voyages"
       );
       const getVoyagesBody = await getVoyagesResponse.json();
 
@@ -23,7 +23,7 @@ export default class AppModel {
   static async getDestinations() {
     try {
       const getDestinationsResponse = await fetch(
-        "http://localhost:4321/getdestinations"
+        "http://localhost:4321/destinations"
       );
       const getDestinationsBody = await getDestinationsResponse.json();
 
@@ -44,7 +44,7 @@ export default class AppModel {
   static async getFerries() {
     try {
       const getFerriesResponse = await fetch(
-        "http://localhost:4321/getferries"
+        "http://localhost:4321/ferries"
       );
       const getFerriesBody = await getFerriesResponse.json();
 
@@ -67,11 +67,7 @@ export default class AppModel {
       const checkFerryResponse = await fetch(
         `http://localhost:4321/isassigned/${ferryID}`,
         {
-          method: "POST",
-          // body: JSON.stringify({ ferryID }),
-          // headers: {
-          //   "Content-Type": "application/json",
-          // },
+          method: "POST"
         }
       );
 
@@ -91,7 +87,37 @@ export default class AppModel {
     }
   }
 
-  // add voyage
+  static async addVoyage({ voyageID, destinationID, ferryID } = { voyageID: null, destinationID: null, ferryID: null }) {
+    try {
+      const addVoyageResponse = await fetch(
+        "http://localhost:4321/voyages",
+        {
+          method: "POST",
+          body: JSON.stringify({ voyageID, destinationID, ferryID }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (addVoyageResponse.status !== 200) {
+        const addVoyageBody = await addVoyageResponse.json();
+        return Promise.reject(addVoyageBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Добавлен рейс`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  } // addVoyage
+
   // add passenger
   // upd passenger
   // upd passengers (reorder)

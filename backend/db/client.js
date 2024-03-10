@@ -55,6 +55,32 @@ export default class DB {
     }
   }
 
+  async addVoyage({ voyageID, destinationID, ferryID } = {
+    voyageID: null, destinationID: null, ferryID: null }
+    ) {
+      if (!voyageID || !destinationID || !ferryID) {
+        const errMsg = `Add voyage error: wrong params (id: ${voyageID}, destinationID: ${destinationID}, ferryID: ${ferryID})`;
+        console.error(errMsg);
+        return Promise.reject({
+          type: "client",
+          error: new Error(errMsg),
+        });
+      }
+
+      try {
+        await this.#dbClient.query(
+          "INSERT INTO voyages (id, destination_id, ferry_id) VALUES ($1, $2, $3);",
+          [voyageID, destinationID, ferryID]
+        );
+      } catch (error) {
+        console.error("Unable to add voyage, error: ", error);
+        return Promise.reject({
+          type: "internal",
+          error,
+        });
+      }
+  }
+
   async getPassengers() {
     try {
       const passengers = await this.#dbClient.query(

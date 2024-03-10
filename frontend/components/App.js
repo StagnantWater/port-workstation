@@ -14,7 +14,31 @@ export default class App {
       addVoyageModal.querySelector('.app-modal__form').reset();
     };
 
-    const okHandler = () => {
+    const addVoyage = async ({ destination, ferry }) => {
+      const voyageID = crypto.randomUUID();
+      try {
+        const addVoyageResult = await AppModel.addVoyage({
+          voyageID: voyageID,
+          destinationID: destination.destinationID,
+          ferryID: ferry.ferryID
+        });
+        const newVoyage = new Voyage({
+          voyageID: voyageID,
+          destination: destination,
+          ferry: ferry,
+          addNotification: this.addNotification
+        });
+
+        this.#voyages.push(newVoyage);
+        newVoyage.render();
+
+        this.addNotification({ text: `${addVoyageResult.message}: ${newVoyage.destinationName} (${newVoyage.ferryName}`, type: 'success' });
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    };
+
+    const okHandler = async () => {
       try {
         const destDatalist = document.getElementById('modal-add-voyage__destinations-datalist');
         const destInput = document.getElementById('modal-add-voyage__dest-input');
@@ -26,35 +50,10 @@ export default class App {
         const chosenFerryOption = ferryDatalist.options.namedItem(ferryInput.value);
         const newFerry = Ferry.getFromOption(chosenFerryOption);
 
-        this.addNotification({ text: `Добавление рейса: ${newDestination.name} (${newFerry.name})`, type: 'success' });
+        await addVoyage({destination: newDestination, ferry: newFerry});
       } catch (err) {
         this.addNotification({ text: `Рейс не был добавлен: ${err.message}`, type: 'error' });
         console.error(err);
-      }
-
-      const addVoyage = async ({ destination, ferry }) => {
-        const voyageID = crypto.randomUUID();
-        try {
-          const addVoyageResult = await AppModel.addVoyage({
-            voyageID: voyageID,
-            destinationID: destination.destinationID,
-            ferryID: ferry.ferryID
-          });
-
-          const newVoyage = new Voyage({
-            voyageID: voyageID,
-            destination: destination,
-            ferry: ferry,
-            addNotification: this.addNotification
-          });
-
-          this.#voyages.push(newVoyage);
-          newVoyage.render();
-
-          this.addNotification({ text: addVoyageResult.message, type: 'success' });
-        } catch (err) {
-          throw new Error(err.message);
-        }
       }
 
       closeHandler();

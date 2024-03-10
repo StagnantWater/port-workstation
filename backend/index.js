@@ -29,7 +29,7 @@ app.use("*", (req, res, next) => {
 app.use("/", express.static(path.resolve(__dirname, "../dist")));
 
 // get voyages
-app.get('/getvoyages', async (req, res) => {
+app.get('/voyages', async (req, res) => {
   try {
     const [dbVoyages, dbPassengers] = await Promise.all([db.getVoyages(), db.getPassengers()]);
 
@@ -65,10 +65,37 @@ app.get('/getvoyages', async (req, res) => {
 });
 
 // body parsing middleware
-app.use('/getvoyages', express.json());
+app.use('/voyages', express.json());
+// add voyage
+app.post('/voyages', async (req, res) => {
+  try {
+    const { voyageID, destinationID, ferryID } = req.body;
+    await db.addVoyage({ voyageID, destinationID, ferryID });
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.send();
+  } catch (err) {
+    switch (err.type) {
+      case 'client':
+        res.statusCode = 400;
+        res.statusMessage = 'Bad request';
+        break;
+      default:
+        res.statusCode = 500;
+        res.statusMessage = 'Internal server error';
+        break;
+    }
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: res.statusCode,
+      message: `Add voyage error: ${err.error.message || err.error}`
+    });
+  }
+});
 
 // get destinations
-app.get('/getdestinations', async (req, res) => {
+app.get('/destinations', async (req, res) => {
   try {
     const dbDestinations = await db.getDestinations();
 
@@ -91,11 +118,8 @@ app.get('/getdestinations', async (req, res) => {
   }
 });
 
-// body parsing middleware
-app.use('/getdestinations', express.json());
-
 // get ferries
-app.get('/getferries', async (req, res) => {
+app.get('/ferries', async (req, res) => {
   try {
     const dbFerries = await db.getFerries();
 
@@ -119,9 +143,6 @@ app.get('/getferries', async (req, res) => {
     });
   }
 });
-
-// body parsing middleware
-app.use('/getferries', express.json());
 
 app.use('/isassigned/:ferryID', express.json());
 app.post('/isassigned/:ferryID', async (req, res) => {
