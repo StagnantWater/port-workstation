@@ -5,6 +5,8 @@ import Voyage from "./Voyage";
 
 export default class App {
   #voyages = [];
+  #destinations = [];
+  #ferries = [];
 
   initAddVoyageModal() {
     const addVoyageModal = document.getElementById('modal-add-voyage');
@@ -15,14 +17,22 @@ export default class App {
     };
 
     const okHandler = () => {
-      // const tasklistID = localStorage.getItem('addTaskTasklistID');
-      // const modalInput = addTaskModal.querySelector('.app-modal__input');
+      try {
+        const destDatalist = document.getElementById('modal-add-voyage__destinations-datalist');
+        const destInput = document.getElementById('modal-add-voyage__dest-input');
+        const chosenDestOption = destDatalist.options.namedItem(destInput.value);
+        const newDestination = Destination.getFromOption(chosenDestOption);
 
-      // if (tasklistID && modalInput.value) {
-      //   this.#tasklists.find(tasklist => tasklist.tasklistID === tasklistID)
-      //     .appendNewTask({ text: modalInput.value });
-      // }
-      this.addNotification({ text: 'OK', type: 'success' });
+        const ferryDatalist = document.getElementById('modal-add-voyage__ferries-datalist');
+        const ferryInput = document.getElementById('modal-add-voyage__ferry-input');
+        const chosenFerryOption = ferryDatalist.options.namedItem(ferryInput.value);
+        const newFerry = Ferry.getFromOption(chosenFerryOption);
+
+        this.addNotification({ text: `Добавление рейса: ${newDestination.name} (${newFerry.name})`, type: 'success' });
+      } catch (err) {
+        this.addNotification({ text: `Рейс не был добавлен: ${err.message}`, type: 'error' });
+        console.error(err);
+      }
 
       closeHandler();
     };
