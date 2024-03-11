@@ -227,4 +227,25 @@ export default class DB {
       });
     }
   }
+
+  async deletePassenger({ passengerID } = { passengerID: null }) {
+    if (!passengerID) {
+      const errMsg = `Delete passenger error: wrong params (passengerID: ${passengerID})`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
+
+    try {
+      await this.#dbClient.query("DELETE FROM passengers WHERE id = $1;", [passengerID]);
+    } catch (error) {
+      console.error("Unable to delete passenger, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
 }

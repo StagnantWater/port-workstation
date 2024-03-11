@@ -201,9 +201,27 @@ export default class AppModel {
     }
   }
 
-  // add passenger
-  // upd passenger
-  // upd passengers (reorder)
-  // delete passenger
-  // transfer passenger
+  static async deletePassenger({ passengerID } = { passengerID: null }) {
+    try {
+      const deletePassengerResponse = await fetch(`http://localhost:4321/passengers/${passengerID}`, {
+        method: "DELETE",
+      });
+
+      if (deletePassengerResponse.status !== 200) {
+        const deletePassengerBody = await deletePassengerResponse.json();
+        return Promise.reject(deletePassengerBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Рейс удален`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  }
 }

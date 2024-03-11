@@ -73,6 +73,14 @@ export default class Voyage {
       .appendChild(newPassengerElement);
   } // addNewPassengerLocal
 
+  deletePassengerLocal = ({ passengerID = null }) => {
+    if(passengerID) {
+      const idx = this.#passengers.findIndex(passenger => passenger.passengerID === passengerID);
+      this.#passengers.splice(idx, 1);
+      document.getElementById(passengerID).remove();
+    }
+  }
+
   render() {
     const liElement = document.createElement('li');
     liElement.classList.add(

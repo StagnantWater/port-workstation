@@ -368,6 +368,50 @@ export default class App {
     document.getElementById('auto-btn').addEventListener('change', renderAutoOption);
   }
 
+  initDeletePassengerModal() {
+    const deletePassengerModal = document.getElementById('modal-delete-passenger');
+
+    const cancelHandler = () => {
+      deletePassengerModal.close();
+      localStorage.setItem('deletePassengerID', '');
+    };
+
+    const deletePassenger = async ({ passengerID, voyageID }) => {
+      try {
+        const deletePassengerResult = await AppModel.deletePassenger({ passengerID });
+
+        this.#voyages.find(voyage => voyage.voyageID === voyageID)
+          .deletePassengerLocal({ passengerID });
+
+        this.addNotification({ text: `${deletePassengerResult.message}`, type: 'success' });
+      } catch (err) {
+        this.addNotification({ text: err.message, type: 'error' });
+        console.error(err);
+      }
+    }
+
+    const okHandler = async () => {
+      const passengerID = localStorage.getItem('deletePassengerID');
+
+      if (passengerID) {
+        let fPassenger = null;
+        let fVoyage = null;
+        for (let voyage of this.#voyages) {
+          fVoyage = voyage;
+          fPassenger = voyage.getPassengerByID({ passengerID });
+          if (fPassenger) break;
+        }
+        await deletePassenger({ passengerID: passengerID, voyageID: fVoyage.voyageID });
+      }
+
+      cancelHandler();
+    };
+
+    deletePassengerModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
+    deletePassengerModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
+    deletePassengerModal.addEventListener('close', cancelHandler);
+  }
+
   initNotifications() {
     const notifications = document.getElementById('app-notifications');
     notifications.show();
@@ -396,6 +440,7 @@ export default class App {
     this.initEditVoyageModal();
     this.initDeleteVoyageModal();
     this.initAddPassengerModal();
+    this.initDeletePassengerModal();
     this.initNotifications();
 
     document.querySelector('.voyage-adder__btn')

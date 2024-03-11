@@ -74,7 +74,13 @@ export default class Passenger {
     deleteButton.setAttribute('type', 'button');
     deleteButton.classList.add('passenger__controls-btn', 'delete-icon');
     deleteButton.addEventListener('click', () => {
-      console.log('DELETE');
+      localStorage.setItem('deletePassengerID', this.#passengerID);
+
+      const deletePassengerModal = document.getElementById('modal-delete-passenger');
+      deletePassengerModal.querySelector('.app-modal__question')
+        .innerHTML = `Груз '${this.#passengerName}' будет удален. Продолжить?`;
+
+        deletePassengerModal.showModal();
     });
     controlsDiv.appendChild(deleteButton);
 
