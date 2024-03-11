@@ -85,7 +85,7 @@ export default class AppModel {
         message: err.message,
       });
     }
-  }
+  } // checkFerryAssignment
 
   static async addVoyage({ voyageID, destinationID, ferryID } = { voyageID: null, destinationID: null, ferryID: null }) {
     try {
@@ -171,7 +171,7 @@ export default class AppModel {
         message: err.message,
       });
     }
-  }
+  } // updateVoyage
 
   static async addPassenger({ passengerID, type, name, size, voyageID } = { passengerID: null, type: null, name: null, size: null, voyageID: null }) {
     try {
@@ -199,7 +199,7 @@ export default class AppModel {
         message: err.message,
       });
     }
-  }
+  } // addPassenger
 
   static async deletePassenger({ passengerID } = { passengerID: null }) {
     try {
@@ -223,29 +223,7 @@ export default class AppModel {
         message: err.message,
       });
     }
-  }
-
-  static async findFerries({ destinationID } = { destinationID: null }) {
-    try {
-      const findFerriesResponse = await fetch(`http://localhost:4321/findferries/${destinationID}`,
-        {
-          method: "POST"
-      });
-      const findFerriesBody = await findFerriesResponse.json();
-
-      if (findFerriesResponse.status !== 200) {
-        return Promise.reject(findFerriesBody);
-      }
-
-      return findFerriesBody.voyages;
-    } catch (err) {
-      return Promise.reject({
-        timestamp: new Date().toISOString(),
-        statusCode: 0,
-        message: err.message,
-      });
-    }
-  }
+  } // deletePassenger
 
   static async movePassenger({ passengerID, voyageID } = { passengerID: null, voyageID: null }) {
     try {
@@ -276,5 +254,5 @@ export default class AppModel {
         message: err.message,
       });
     }
-  }
+  } // movePassenger
 }

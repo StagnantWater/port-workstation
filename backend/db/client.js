@@ -53,33 +53,33 @@ export default class DB {
         error,
       });
     }
-  }
+  } // getVoyages
 
   async addVoyage({ voyageID, destinationID, ferryID } = {
     voyageID: null, destinationID: null, ferryID: null }
-    ) {
-      if (!voyageID || !destinationID || !ferryID) {
-        const errMsg = `Add voyage error: wrong params (id: ${voyageID}, destinationID: ${destinationID}, ferryID: ${ferryID})`;
-        console.error(errMsg);
-        return Promise.reject({
-          type: "client",
-          error: new Error(errMsg),
-        });
-      }
+  ) {
+    if (!voyageID || !destinationID || !ferryID) {
+      const errMsg = `Add voyage error: wrong params (id: ${voyageID}, destinationID: ${destinationID}, ferryID: ${ferryID})`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
 
-      try {
-        await this.#dbClient.query(
-          "INSERT INTO voyages (id, destination_id, ferry_id) VALUES ($1, $2, $3);",
-          [voyageID, destinationID, ferryID]
-        );
-      } catch (error) {
-        console.error("Unable to add voyage, error: ", error);
-        return Promise.reject({
-          type: "internal",
-          error,
-        });
-      }
-  }
+    try {
+      await this.#dbClient.query(
+        "INSERT INTO voyages (id, destination_id, ferry_id) VALUES ($1, $2, $3);",
+        [voyageID, destinationID, ferryID]
+      );
+    } catch (error) {
+      console.error("Unable to add voyage, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  } // addVoyage
 
   async deleteVoyage({ voyageID } = { voyageID: null }) {
     if (!voyageID) {
@@ -100,7 +100,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // deleteVoyage
 
   async updateVoyage({ voyageID, destinationID } = { voyageID: null, destinationID: null }) {
     if (!voyageID || !destinationID) {
@@ -121,7 +121,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // updateVoyage
 
   async getPassengers() {
     try {
@@ -137,7 +137,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // getPassengers
 
   async getDestinations() {
     try {
@@ -153,7 +153,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // getDestinations
 
   async getFerries() {
     try {
@@ -169,7 +169,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // getFerries
 
   async getVoyageByFerry({ ferryID } = { ferryID: null }) {
     if (!ferryID) {
@@ -194,7 +194,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // getVoyageByFerry
 
   async addPassenger(
     { passengerID, type, name, size, voyageID } = {
@@ -212,7 +212,7 @@ export default class DB {
         type: "client",
         error: new Error(errMsg),
       });
-    }
+    } // addPassenger
 
     try {
       await this.#dbClient.query(
@@ -247,7 +247,7 @@ export default class DB {
         error,
       });
     }
-  }
+  } // deletePassenger
 
   async updatePassenger({ passengerID, voyageID } = { passengerID: null, voyageID: null }) {
     if (!passengerID || !voyageID) {
@@ -268,5 +268,5 @@ export default class DB {
         error,
       });
     }
-  }
+  } // updatePassenger
 }

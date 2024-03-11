@@ -85,7 +85,7 @@ export default class Voyage {
       this.#passengers.splice(idx, 1);
       document.getElementById(passengerID).remove();
     }
-  }
+  } // deletePassengerLocal
 
   render() {
     const liElement = document.createElement('li');
@@ -174,8 +174,7 @@ export default class Voyage {
     slots.classList.add('voyage__free-space', 'autopark-slots');
     slots.innerHTML = `Свободных машиномест: ${this.freeAutopark}`;
     infoDiv.appendChild(slots);
-
-  }
+  } // renderFreeSpace
 
   reRenderFreeSpace() {
     const infoDiv = document.getElementById(this.#voyageID).querySelector('.voyage__info');
@@ -185,5 +184,5 @@ export default class Voyage {
 
     const slots = infoDiv.querySelector('.autopark-slots');
     slots.innerHTML = `Свободных машиномест: ${this.freeAutopark}`;
-  }
+  } // reRenderFreeSpace
 }
