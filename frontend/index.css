@@ -144,6 +144,10 @@ body {
   color: var(--voyage-text-color);
 }
 
+.voyage__free-space {
+  color: var(--voyage-text-color);
+}
+
 .passenger {
   width: 100%;
   box-sizing: border-box;

@@ -241,6 +241,7 @@ export default class App {
 
     const okHandler = async () => {
       const voyageID = localStorage.getItem('addPassengerVoyageID');
+      const voyage = this.#voyages.find(voyage => voyage.voyageID === voyageID);
 
       if (voyageID) {
         try {
@@ -254,15 +255,21 @@ export default class App {
             throw new Error('Наименование не может быть пустым');
           }
 
-          var size = 0;
+          let size = 0;
           if (type === 'cargo') {
-            size = document.getElementById('modal-add-passenger__quantity-input').value;
+            size = parseInt(document.getElementById('modal-add-passenger__quantity-input').value);
+            if (size > voyage.freeHold) {
+              throw new Error('Товар не добавлен: недостаточно места в пароме');
+            }
           }
           else {
             const select = document.getElementById("modal-add-passenger__auto-select");
-            size = select.options[select.selectedIndex].value;
+            size = parseInt(select.options[select.selectedIndex].value);
+            if (size > voyage.freeAutopark) {
+              throw new Error('Автомобиль не добавлен: недостаточно места в пароме');
+            }
           }
-          if (parseInt(size) <= 0) {
+          if (size <= 0) {
             throw new Error('Размер груза должен быть положительным');
           }
 
@@ -428,6 +435,7 @@ export default class App {
             size: passenger.size
           });
         }
+        voyageObj.renderFreeSpace();
       }
     } catch (err) {
       this.addNotification({ text: err.message, type: 'error' });

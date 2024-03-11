@@ -18,6 +18,10 @@ export default class Passenger {
 
   get passengerID() { return this.#passengerID; }
 
+  get type() { return this.#passengerType; }
+
+  get size() { return this.#passengerSize; }
+
   render() {
     const liElement = document.createElement('li');
     liElement.classList.add('voyage__passengers-list-item', 'passenger');

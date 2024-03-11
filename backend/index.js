@@ -47,6 +47,8 @@ app.get('/voyages', async (req, res) => {
       destinationName: voyage.destination_name,
       ferryID: voyage.ferry_id,
       ferryName: voyage.ferry_name,
+      ferryHold: voyage.hold,
+      ferryAutopark: voyage.autopark,
       passengers: passengers.filter(passenger => passenger.voyageID === voyage.id)
     }));
 

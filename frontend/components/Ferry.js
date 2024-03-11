@@ -17,6 +17,12 @@ export default class Ferry {
   get name() {
     return this.#name;
   }
+  get hold() {
+    return this.#hold;
+  }
+  get autopark() {
+    return this.#autopark;
+  }
 
   renderAsOption() {
     const optionElement = document.createElement("option");

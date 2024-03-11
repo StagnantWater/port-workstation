@@ -34,6 +34,27 @@ export default class Voyage {
     }
   }
 
+  get freeHold() {
+    let occupied = 0;
+    for (const passenger of this.#passengers) {
+      if (passenger.type === 'cargo') {
+        occupied += passenger.size;
+      }
+    }
+    return(this.#voyageFerry.hold - occupied);
+  }
+
+  get freeAutopark() {
+    var occupied = 0;
+    for (const passenger of this.#passengers) {
+      if (passenger.type === 'auto') {
+        occupied += passenger.size;
+      }
+    }
+
+    return (this.#voyageFerry.autopark - occupied);
+  }
+
   pushPassenger = ({ passenger }) => this.#passengers.push(passenger);
 
   getPassengerByID = ({ passengerID }) => this.#passengers.find(passenger => passenger.passengerID === passengerID);
@@ -126,4 +147,19 @@ export default class Voyage {
     const adderElement = document.querySelector('.voyage-adder');
     adderElement.parentElement.insertBefore(liElement, adderElement);
   } // render
+
+  renderFreeSpace() {
+    const infoDiv = document.getElementById(this.#voyageID).querySelector('.voyage__info');
+
+    const cells = document.createElement('p');
+    cells.classList.add('voyage__free-space');
+    cells.innerHTML = `Свободных ячеек: ${this.freeHold}`;
+    infoDiv.appendChild(cells);
+
+    const slots = document.createElement('p');
+    slots.classList.add('voyage__free-space');
+    slots.innerHTML = `Свободных машиномест: ${this.freeAutopark}`;
+    infoDiv.appendChild(slots);
+
+  }
 }
