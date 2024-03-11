@@ -50,6 +50,7 @@ body {
 
 .app-header {
   width: 100;
+  padding-bottom: 4vh;
   padding-top: 2vh;
   box-sizing: border-box;
 }
@@ -58,7 +59,7 @@ body {
   padding-left: 0.5vw;
   font-size: clamp(1.5rem, 2.7vw, 3.2rem);
   color: var(--main-header-text-color);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .app-header__app-navigation {
