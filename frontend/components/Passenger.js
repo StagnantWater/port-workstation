@@ -66,7 +66,8 @@ export default class Passenger {
     moveButton.setAttribute('type', 'button');
     moveButton.classList.add('passenger__controls-btn', 'move-icon');
     moveButton.addEventListener('click', () => {
-      console.log('MOVE');
+      localStorage.setItem('movePassengerID', this.#passengerID);
+      document.getElementById('modal-move-passenger').showModal();
     });
     controlsDiv.appendChild(moveButton);
 

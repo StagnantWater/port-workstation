@@ -412,6 +412,30 @@ export default class App {
     deletePassengerModal.addEventListener('close', cancelHandler);
   }
 
+  initMovePassengerModal() {
+    const movePassengerModal = document.getElementById('modal-move-passenger');
+
+    const cancelHandler = () => {
+      movePassengerModal.close();
+      localStorage.setItem('movePassengerID', '');
+    };
+
+    const okHandler = async () => {
+      const passengerID = localStorage.getItem('movePassengerID');
+
+      if (passengerID) {
+        // TODO
+        console.log('HERE');
+      }
+
+      cancelHandler();
+    };
+
+    movePassengerModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
+    movePassengerModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
+    movePassengerModal.addEventListener('close', cancelHandler);
+  }
+
   initNotifications() {
     const notifications = document.getElementById('app-notifications');
     notifications.show();

@@ -127,6 +127,22 @@
         </div>
       </form>
     </dialog>
+    <dialog class="app-modal" id="modal-move-passenger">
+      <form class="app-modal__form">
+        <h1 class="modal-move-passenger app-modal__header">Перемещение груза</h1>
+        <label for="modal-move-passenger__ferry-input" class="app-modal__label">
+          Доступные паромы:
+        </label>
+        <input
+          type="text"
+          id="modal-move-passenger__ferry-input"
+          class="app-modal__input"
+          list="modal-move-passenger__ferries-datalist"
+        />
+        <datalist id="modal-move-passenger__ferries-datalist">
+        </datalist>
+      </form>
+    </dialog>
     <dialog class="app-notifications" id="app-notifications">
     </dialog>
   </body>
