@@ -113,6 +113,16 @@ export default class Voyage {
     innerUlElement.classList.add('voyage__passengers-list');
     liElement.appendChild(innerUlElement);
 
+    const button = document.createElement('button');
+    button.setAttribute('type', 'button');
+    button.classList.add('voyage__add-passenger-btn');
+    button.innerHTML = '&#10010; Добавить груз';
+    button.addEventListener('click', () => {
+      localStorage.setItem('addPassengerVoyageID', this.#voyageID);
+      document.getElementById('modal-add-passenger').showModal();
+    });
+    liElement.appendChild(button);
+
     const adderElement = document.querySelector('.voyage-adder');
     adderElement.parentElement.insertBefore(liElement, adderElement);
   } // render

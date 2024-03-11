@@ -1,6 +1,7 @@
 import AppModel from "../model/AppModel";
 import Destination from "./Destination";
 import Ferry from "./Ferry";
+import Passenger from "./Passenger";
 import Voyage from "./Voyage";
 
 export default class App {
@@ -204,6 +205,162 @@ export default class App {
     destDatalist.replaceChildren(...destOptions);
   } // renderEditVoyageModal
 
+  initAddPassengerModal() {
+    const addPassengerModal = document.getElementById('modal-add-passenger');
+
+    const cancelHandler = () => {
+      addPassengerModal.close();
+      localStorage.setItem('addPassengerVoyageID', '');
+      addPassengerModal.querySelector('.app-modal__form').reset();
+      addPassengerModal.querySelector('.app-modal__passenger-config').innerHTML = '';
+    };
+
+    const addPassenger = async ({ voyageID, type, name, size }) => {
+      const passengerID = crypto.randomUUID();
+      try {
+        const addPassengerResult = await AppModel.addPassenger({
+          passengerID: passengerID,
+          type: type,
+          name: name,
+          size: size,
+          voyageID: voyageID
+        });
+
+        this.#voyages.find(voyage => voyage.voyageID === voyageID)
+          .addNewPassengerLocal({
+            passengerID,
+            name,
+            type,
+            size});
+
+          this.addNotification({ text: `${addPassengerResult.message}`, type: 'success' });
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    }
+
+    const okHandler = async () => {
+      const voyageID = localStorage.getItem('addPassengerVoyageID');
+
+      if (voyageID) {
+        try {
+          const type = addPassengerModal.querySelector('input[name="passenger-type"]:checked').value;
+          if (!type) {
+            throw new Error('Не выбран вид груза');
+          }
+
+          const name = document.getElementById('modal-add-passenger__name-input').value;
+          if (!name) {
+            throw new Error('Наименование не может быть пустым');
+          }
+
+          var size = 0;
+          if (type === 'cargo') {
+            size = document.getElementById('modal-add-passenger__quantity-input').value;
+          }
+          else {
+            const select = document.getElementById("modal-add-passenger__auto-select");
+            size = select.options[select.selectedIndex].value;
+          }
+          if (parseInt(size) <= 0) {
+            throw new Error('Размер груза должен быть положительным');
+          }
+
+          await addPassenger({ voyageID: voyageID, type: type, name: name, size: size });
+        } catch (err) {
+          this.addNotification({ text: err.message, type: 'error' });
+          console.error(err);
+        }
+      }
+
+      cancelHandler();
+    };
+
+    const renderCargoOption = () => {
+      const configElement = addPassengerModal.querySelector('.app-modal__passenger-config');
+      configElement.innerHTML = '';
+
+      const labelElement = document.createElement('label');
+      labelElement.classList.add('app-modal__label');
+      labelElement.setAttribute('for', 'modal-add-passenger__name-input');
+      labelElement.innerHTML = 'Введите наименование:';
+      configElement.appendChild(labelElement);
+      configElement.appendChild(document.createElement('br'));
+
+      const inputName = document.createElement('input');
+      inputName.classList.add('app-modal__input');
+      inputName.setAttribute('id', 'modal-add-passenger__name-input');
+      inputName.setAttribute('type', 'text');
+      configElement.appendChild(inputName);
+      configElement.appendChild(document.createElement('br'));
+
+      const numberLabel = document.createElement('label');
+      numberLabel.classList.add('app-modal__label');
+      numberLabel.setAttribute('for', 'modal-add-passenger__quantity-input');
+      numberLabel.innerHTML = 'Введите количество:';
+      configElement.appendChild(numberLabel);
+      configElement.appendChild(document.createElement('br'));
+
+      const inputNunber = document.createElement('input');
+      inputNunber.classList.add('app-modal__input');
+      inputNunber.setAttribute('id', 'modal-add-passenger__quantity-input');
+      inputNunber.setAttribute('type', 'number');
+      configElement.appendChild(inputNunber);
+    }
+
+    const renderAutoOption = () => {
+      const configElement = addPassengerModal.querySelector('.app-modal__passenger-config');
+      configElement.innerHTML = '';
+
+      const labelElement = document.createElement('label');
+      labelElement.classList.add('app-modal__label');
+      labelElement.setAttribute('for', 'modal-add-passenger__name-input');
+      labelElement.innerHTML = 'Введите наименование:';
+      configElement.appendChild(labelElement);
+      configElement.appendChild(document.createElement('br'));
+
+      const inputName = document.createElement('input');
+      inputName.classList.add('app-modal__input');
+      inputName.setAttribute('id', 'modal-add-passenger__name-input');
+      inputName.setAttribute('type', 'text');
+      configElement.appendChild(inputName);
+      configElement.appendChild(document.createElement('br'));
+
+      const selectLabel = document.createElement('label');
+      selectLabel.classList.add('app-modal__label');
+      labelElement.setAttribute('for', 'modal-add-passenger__auto-select');
+      selectLabel.innerHTML = 'Выберите тип';
+      configElement.appendChild(selectLabel);
+
+      const selectElement = document.createElement('select');
+      selectElement.classList.add('app-modal__select');
+      selectElement.setAttribute('id', 'modal-add-passenger__auto-select');
+
+      const smallOption = document.createElement('option');
+      smallOption.value = '1';
+      smallOption.innerHTML = 'Легковой автомобиль';
+      selectElement.appendChild(smallOption);
+
+      const mediumOption = document.createElement('option');
+      mediumOption.value = '2';
+      mediumOption.innerHTML = 'Грузовой автомобиль';
+      selectElement.appendChild(mediumOption);
+
+      const largeOption = document.createElement('option');
+      largeOption.value = '3';
+      largeOption.innerHTML = 'Тягач';
+      selectElement.appendChild(largeOption);
+
+      configElement.appendChild(selectElement);
+    }
+
+    addPassengerModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
+    addPassengerModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
+    addPassengerModal.addEventListener('close', cancelHandler);
+    document.getElementById('cargo-btn').addEventListener('change', renderCargoOption);
+    document.getElementById('auto-btn').addEventListener('change', renderAutoOption);
+  }
+
   initNotifications() {
     const notifications = document.getElementById('app-notifications');
     notifications.show();
@@ -231,6 +388,7 @@ export default class App {
     this.initAddVoyageModal();
     this.initEditVoyageModal();
     this.initDeleteVoyageModal();
+    this.initAddPassengerModal();
     this.initNotifications();
 
     document.querySelector('.voyage-adder__btn')

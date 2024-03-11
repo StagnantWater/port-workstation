@@ -173,6 +173,34 @@ export default class AppModel {
     }
   }
 
+  static async addPassenger({ passengerID, type, name, size, voyageID } = { passengerID: null, type: null, name: null, size: null, voyageID: null }) {
+    try {
+      const addPassengerResponse = await fetch("http://localhost:4321/passengers", {
+        method: "POST",
+        body: JSON.stringify({ passengerID, type, name, size, voyageID }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (addPassengerResponse.status !== 200) {
+        const addPassengerBody = await addPassengerResponse.json();
+        return Promise.reject(addPassengerBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Груз '${name}' был успешно добавлен`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  }
+
   // add passenger
   // upd passenger
   // upd passengers (reorder)

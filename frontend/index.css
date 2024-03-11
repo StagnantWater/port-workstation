@@ -192,6 +192,18 @@ body {
   background-color: #005558;
 }
 
+.voyage__add-passenger-btn {
+  border: none;
+  background: none;
+  font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+  color: var(--text-color);
+}
+
+.voyage__add-passenger-btn:hover {
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .voyage-adder {
   background-color: var(--passenger-bg-color);
   transition: background-color 0.75s ease;
@@ -258,6 +270,8 @@ body {
   background-color: var(--modal-input-bg-color);
   color: var(--modal-text-color);
   border: 2px solid var(--modal-input-border-color);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .app-modal__controls {
@@ -269,6 +283,28 @@ body {
 .app-modal__btn {
   cursor: pointer;
   padding: 5px;
+}
+
+.modal-add-passenger__clarification {
+  color: var(--text-color);
+}
+
+.app-modal__radio {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.app-modal__radio-element {
+  justify-content: start;
+}
+
+.app-modal__radio-label{
+  color: var(--text-color);
+}
+
+.app-modal__passenger-config {
+  column-count: 1;
+  width: 100%;
 }
 
 .app-notifications {

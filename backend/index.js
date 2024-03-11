@@ -222,6 +222,34 @@ app.post('/isassigned/:ferryID', async (req, res) => {
   }
 });
 
+app.use('/passengers', express.json())
+app.post('/passengers', async (req, res) => {
+  try {
+    const { passengerID, type, name, size, voyageID } = req.body;
+    await db.addPassenger({ passengerID, type, name, size, voyageID });
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.send();
+  } catch (err) {
+    switch (err.type) {
+      case 'client':
+        res.statusCode = 400;
+        res.statusMessage = 'Bad request';
+        break;
+      default:
+        res.statusCode = 500;
+        res.statusMessage = 'Internal server error';
+        break;
+    }
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: res.statusCode,
+      message: `Add passenger error: ${err.error.message || err.error}`
+    });
+  }
+});
+
 const server = app.listen(Number(appPort), appHost, async () => {
   try {
     await db.connect();

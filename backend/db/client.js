@@ -195,4 +195,36 @@ export default class DB {
       });
     }
   }
+
+  async addPassenger(
+    { passengerID, type, name, size, voyageID } = {
+      passengerID: null,
+      type: null,
+      name: null,
+      size: null,
+      voyageID: null
+    }
+  ) {
+    if (!passengerID || !type || !name || !size || !voyageID) {
+      const errMsg = `Add passenger error: wrong params`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
+
+    try {
+      await this.#dbClient.query(
+        "INSERT INTO passengers (id, name, passenger_type, space_occupied, voyage_id) VALUES ($1, $2, $3, $4, $5);",
+        [passengerID, name, type, parseInt(size), voyageID]
+      );
+    } catch (error) {
+      console.error("Unable to add passenger, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
 }

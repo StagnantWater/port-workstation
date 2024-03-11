@@ -34,7 +34,7 @@ export default class Passenger {
     const sizeText = document.createElement('span');
     sizeText.classList.add('passenger__text', 'passenger__size');
     if (this.#passengerType === 'auto') {
-      switch (this.#passengerSize) {
+      switch (parseInt(this.#passengerSize)) {
         case 1:
           sizeText.innerHTML = 'Легковой автомобиль';
           break;

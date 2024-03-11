@@ -96,6 +96,27 @@
         </div>
       </form>
     </dialog>
+    <dialog class="app-modal" id="modal-add-passenger">
+      <form class="app-modal__form">
+        <h1 class="modal-add-passenger__header app-modal__header">Добавление груза</h1>
+        <p class="modal-add-passenger__clarification">Выберите тип груза:</p>
+        <div class="app-modal__radio">
+          <div class="app-modal__radio-element radio-element__cargo">
+            <input class="app-modal__radio-btn" type="radio" id="cargo-btn" name="passenger-type" value="cargo">
+            <label class="app-modal__radio-label" for="cargo-btn">Товар</label>
+          </div>
+          <div class="app-modal__radio-element radio-element__auto">
+            <input class="app-modal__radio-btn" type="radio" id="auto-btn" name="passenger-type" value="auto">
+            <label class="app-modal__radio-label" for="auto-btn">Автомобиль</label>
+          </div>
+        </div>
+        <div class="app-modal__passenger-config"></div>
+        <div class="app-modal__controls">
+          <button type="button" class="app-modal__btn modal-ok-btn">OK</button>
+          <button type="button" class="app-modal__btn modal-cancel-btn">Отмена</button>
+        </div>
+      </form>
+    </dialog>
     <dialog class="app-notifications" id="app-notifications">
     </dialog>
   </body>
