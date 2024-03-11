@@ -50,8 +50,7 @@ body {
 
 .app-header {
   width: 100;
-  padding-bottom: 4vh;
-  padding-top: 2vh;
+  padding: 3vh 0;
   box-sizing: border-box;
 }
 
@@ -122,6 +121,18 @@ body {
 
 .voyage__info {
   display: block;
+  gap: 0.75vh;
+}
+
+.voyage__destination {
+  font-size: clamp(0.75rem, 2vw, 2rem);
+  font-weight: 400;
+}
+
+.voyage__ferry {
+  font-weight: 500;
+  font-size: (1.2rem, 2.8vw, 3.2rem);
+  padding-left: 0.25vw;
 }
 
 .voyage__controls {
@@ -130,10 +141,11 @@ body {
 }
 
 .voyage__controls-btn {
-  width: 2.5vw;
-  height: 2.5vw;
+  width: 2vw;
+  height: 2vw;
   opacity: 0.6;
   border: none;
+  padding-left: 1vw;
 }
 
 .voyage__destination {
@@ -147,6 +159,8 @@ body {
 
 .voyage__free-space {
   color: var(--voyage-text-color);
+  padding-left: 0.5vw;
+  padding-bottom: 0.75vh;
 }
 
 .passenger {
@@ -184,17 +198,15 @@ body {
 }
 
 .delete-icon {
-  background: url(assets/delete-forever.svg) center / cover;
-  background-color: #005558;
+  background: url(assets/delete.svg) center / cover;
 }
 
 .move-icon {
-  background: url(assets/swap-horiz.svg) center / cover;
+  background: url(assets/move.svg) center / cover;
 }
 
 .edit-icon {
   background: url(assets/edit.svg) center / cover;
-  background-color: #005558;
 }
 
 .voyage__add-passenger-btn {
@@ -322,6 +334,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.app-modal__question {
+  font-size: clamp(0.5rem, 1.8vw, 1.6rem);
+  text-align: center;
+  padding: 1.5vw 0;
+}
+
+.app-modal__btn {
+  border-radius: 20%;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.app-modal__radio {
+  gap: 4vh;
+}
+
+.app-modal__radio-element {
+  gap: 4vh;
+  padding-bottom: 1vh;
+}
+
+#modal-add-passenger__name-input {
+  padding-bottom: 2vh;
+}
+
+br {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
 }
 
 .notification {
