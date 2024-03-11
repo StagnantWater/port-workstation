@@ -274,6 +274,9 @@ export default class App {
           }
 
           await addPassenger({ voyageID: voyageID, type: type, name: name, size: size });
+          for (const voyage of this.#voyages) {
+            voyage.reRenderFreeSpace();
+          }
         } catch (err) {
           this.addNotification({ text: err.message, type: 'error' });
           console.error(err);
@@ -384,6 +387,9 @@ export default class App {
           .deletePassengerLocal({ passengerID });
 
         this.addNotification({ text: `${deletePassengerResult.message}`, type: 'success' });
+        for (const voyage of this.#voyages) {
+          voyage.reRenderFreeSpace();
+        }
       } catch (err) {
         this.addNotification({ text: err.message, type: 'error' });
         console.error(err);
@@ -418,14 +424,84 @@ export default class App {
     const cancelHandler = () => {
       movePassengerModal.close();
       localStorage.setItem('movePassengerID', '');
+      movePassengerModal.querySelector('.app-modal__form').reset();
     };
+
+    const movePassenger = async ({ passenger, srcVoyageID, destVoyageID }) => {
+      const movePassengerResult = await AppModel.movePassenger({
+        passengerID: passenger.passengerID, voyageID: destVoyageID
+      });
+
+      this.#voyages.find(voyage => voyage.voyageID === destVoyageID)
+        .addNewPassengerLocal({
+          passengerID: passenger.passengerID,
+          name: passenger.name,
+          type: passenger.type,
+          size: passenger.size
+      });
+
+      this.#voyages.find(voyage => voyage.voyageID === srcVoyageID)
+        .deletePassengerLocal({
+          passengerID: passenger.passengerID
+      });
+
+      this.addNotification({ text: `${movePassengerResult.message}`, type: 'success' });
+      for (const voyage of this.#voyages) {
+        voyage.reRenderFreeSpace();
+      }
+    }
 
     const okHandler = async () => {
       const passengerID = localStorage.getItem('movePassengerID');
 
       if (passengerID) {
-        // TODO
-        console.log('HERE');
+        try {
+          const ferryDatalist = document.getElementById('modal-move-passenger__ferries-datalist');
+          const ferryInput = document.getElementById('modal-move-passenger__ferry-input');
+          const chosenFerryOption = ferryDatalist.options.namedItem(ferryInput.value);
+          const newFerry = Ferry.getFromOption(chosenFerryOption);
+
+          let fPassenger = null;
+          let fVoyage = null;
+          for (let voyage of this.#voyages) {
+            fVoyage = voyage;
+            fPassenger = voyage.getPassengerByID({ passengerID });
+            if (fPassenger) break;
+          }
+
+          if (!fVoyage) {
+            throw new Error('груз не найден');
+          }
+          else if (fVoyage.ferryID === newFerry.ferryID) {
+            throw new Error('выбран исходный паром');
+          }
+
+          let dVoyage = null;
+          let isSame = false;
+          const sameDest = this.#voyages.filter(voyage => voyage.destinationID === fVoyage.destinationID);
+          for (const voyage of sameDest) {
+            if (voyage.ferryID === newFerry.ferryID) {
+              isSame = true;
+              dVoyage = voyage;
+              break;
+            }
+          }
+          if (isSame) {
+            if ((fPassenger.type === 'cargo') && (fPassenger.size > dVoyage.freeHold)) {
+              throw new Error("в пароме не хватает ячеек");
+            }
+            if ((fPassenger.type === 'auto') && (fPassenger.size > dVoyage.freeAutopark)) {
+              throw new Error("в пароме не хватает машиномест");
+            }
+            await movePassenger({ passenger: fPassenger, srcVoyageID: fVoyage.voyageID, destVoyageID: dVoyage.voyageID });
+          }
+          else {
+            throw new Error('паром не следует до того же назначения');
+          }
+        } catch (err) {
+          this.addNotification({ text: `Груз не был перемещен: ${err.message}`, type: 'error' });
+          console.error(err);
+        }
       }
 
       cancelHandler();
@@ -434,6 +510,24 @@ export default class App {
     movePassengerModal.querySelector('.modal-ok-btn').addEventListener('click', okHandler);
     movePassengerModal.querySelector('.modal-cancel-btn').addEventListener('click', cancelHandler);
     movePassengerModal.addEventListener('close', cancelHandler);
+  }
+
+  static async renderMovePassengerModal() {
+    const ferryDatalist = document.getElementById('modal-move-passenger__ferries-datalist');
+    const ferryOptions = [];
+    const ferries = await AppModel.getFerries();
+
+    for (const ferry of ferries) {
+      const ferryObj = new Ferry({
+        ferryID: ferry.ferryID,
+        name: ferry.name,
+        hold: ferry.hold,
+        autopark: ferry.autopark
+      });
+      ferryOptions.push(ferryObj.renderAsOption());
+    }
+
+    ferryDatalist.replaceChildren(...ferryOptions);
   }
 
   initNotifications() {
@@ -465,6 +559,7 @@ export default class App {
     this.initDeleteVoyageModal();
     this.initAddPassengerModal();
     this.initDeletePassengerModal();
+    this.initMovePassengerModal();
     this.initNotifications();
 
     document.querySelector('.voyage-adder__btn')

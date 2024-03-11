@@ -1,3 +1,5 @@
+import App from "./App";
+
 export default class Passenger {
   #passengerID = null;
   #passengerName = '';
@@ -17,6 +19,8 @@ export default class Passenger {
   }
 
   get passengerID() { return this.#passengerID; }
+
+  get name() { return this.#passengerName; }
 
   get type() { return this.#passengerType; }
 
@@ -67,6 +71,7 @@ export default class Passenger {
     moveButton.classList.add('passenger__controls-btn', 'move-icon');
     moveButton.addEventListener('click', () => {
       localStorage.setItem('movePassengerID', this.#passengerID);
+      App.renderMovePassengerModal();
       document.getElementById('modal-move-passenger').showModal();
     });
     controlsDiv.appendChild(moveButton);

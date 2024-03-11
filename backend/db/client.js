@@ -248,4 +248,25 @@ export default class DB {
       });
     }
   }
+
+  async updatePassenger({ passengerID, voyageID } = { passengerID: null, voyageID: null }) {
+    if (!passengerID || !voyageID) {
+      const errMsg = `Move passenger error: wrong params`;
+      console.error(errMsg);
+      return Promise.reject({
+        type: "client",
+        error: new Error(errMsg),
+      });
+    }
+
+    try {
+      await this.#dbClient.query("UPDATE passengers SET voyage_id = $1 WHERE id = $2;", [voyageID, passengerID]);
+    } catch (error) {
+      console.error("Unable to move passenger, error: ", error);
+      return Promise.reject({
+        type: "internal",
+        error,
+      });
+    }
+  }
 }

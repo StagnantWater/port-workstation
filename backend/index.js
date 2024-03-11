@@ -280,6 +280,34 @@ app.delete('/passengers/:passengerID', async (req, res) => {
   }
 });
 
+app.patch('/passengers/:passengerID', async (req, res) => {
+  try {
+    const { passengerID } = req.params;
+    const { voyageID } = req.body;
+    await db.updatePassenger({ passengerID, voyageID });
+
+    res.statusCode = 200;
+    res.statusMessage = 'OK';
+    res.send();
+  } catch (err) {
+    switch (err.type) {
+      case 'client':
+        res.statusCode = 400;
+        res.statusMessage = 'Bad request';
+        break;
+      default:
+        res.statusCode = 500;
+        res.statusMessage = 'Internal server error';
+        break;
+    }
+    res.json({
+      timestamp: new Date().toISOString(),
+      statusCode: res.statusCode,
+      message: `Update passenger error: ${err.error.message || err.error}`
+    });
+  }
+});
+
 const server = app.listen(Number(appPort), appHost, async () => {
   try {
     await db.connect();

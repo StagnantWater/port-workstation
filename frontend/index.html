@@ -131,7 +131,7 @@
       <form class="app-modal__form">
         <h1 class="modal-move-passenger app-modal__header">Перемещение груза</h1>
         <label for="modal-move-passenger__ferry-input" class="app-modal__label">
-          Доступные паромы:
+          Выберите паром для переноса груза:
         </label>
         <input
           type="text"
@@ -141,6 +141,10 @@
         />
         <datalist id="modal-move-passenger__ferries-datalist">
         </datalist>
+        <div class="app-modal__controls">
+          <button type="button" class="app-modal__btn modal-ok-btn">OK</button>
+          <button type="button" class="app-modal__btn modal-cancel-btn">Отмена</button>
+        </div>
       </form>
     </dialog>
     <dialog class="app-notifications" id="app-notifications">

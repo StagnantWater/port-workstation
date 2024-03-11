@@ -21,7 +21,13 @@ export default class Voyage {
 
   get voyageID() { return this.#voyageID; }
 
+  get destinationID() { return this.#voyageDestination.destinationID; }
+
   get destinationName() { return this.#voyageDestination.name; }
+
+  get ferry() { return this.#voyageFerry; }
+
+  get ferryID() { return this.#voyageFerry.ferryID; }
 
   get ferryName() { return this.#voyageFerry.name; }
 
@@ -160,14 +166,24 @@ export default class Voyage {
     const infoDiv = document.getElementById(this.#voyageID).querySelector('.voyage__info');
 
     const cells = document.createElement('p');
-    cells.classList.add('voyage__free-space');
+    cells.classList.add('voyage__free-space', 'cargo-hold');
     cells.innerHTML = `Свободных ячеек: ${this.freeHold}`;
     infoDiv.appendChild(cells);
 
     const slots = document.createElement('p');
-    slots.classList.add('voyage__free-space');
+    slots.classList.add('voyage__free-space', 'autopark-slots');
     slots.innerHTML = `Свободных машиномест: ${this.freeAutopark}`;
     infoDiv.appendChild(slots);
 
+  }
+
+  reRenderFreeSpace() {
+    const infoDiv = document.getElementById(this.#voyageID).querySelector('.voyage__info');
+
+    const cells = infoDiv.querySelector('.cargo-hold');
+    cells.innerHTML = `Свободных ячеек: ${this.freeHold}`;
+
+    const slots = infoDiv.querySelector('.autopark-slots');
+    slots.innerHTML = `Свободных машиномест: ${this.freeAutopark}`;
   }
 }

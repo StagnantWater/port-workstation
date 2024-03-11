@@ -224,4 +224,57 @@ export default class AppModel {
       });
     }
   }
+
+  static async findFerries({ destinationID } = { destinationID: null }) {
+    try {
+      const findFerriesResponse = await fetch(`http://localhost:4321/findferries/${destinationID}`,
+        {
+          method: "POST"
+      });
+      const findFerriesBody = await findFerriesResponse.json();
+
+      if (findFerriesResponse.status !== 200) {
+        return Promise.reject(findFerriesBody);
+      }
+
+      return findFerriesBody.voyages;
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  }
+
+  static async movePassenger({ passengerID, voyageID } = { passengerID: null, voyageID: null }) {
+    try {
+      const movePassengerResponse = await fetch(
+        `http://localhost:4321/passengers/${passengerID}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ voyageID }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (movePassengerResponse.status !== 200) {
+        const movePassengerBody = await movePassengerResponse.json();
+        return Promise.reject(movePassengerBody);
+      }
+
+      return {
+        timestamp: new Date().toISOString(),
+        message: `Груз перемещен`,
+      };
+    } catch (err) {
+      return Promise.reject({
+        timestamp: new Date().toISOString(),
+        statusCode: 0,
+        message: err.message,
+      });
+    }
+  }
 }
